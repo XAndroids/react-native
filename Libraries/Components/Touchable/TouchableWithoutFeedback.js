@@ -251,15 +251,20 @@ const TouchableWithoutFeedback = ((createReactClass({
   render: function(): React.Element<any> {
     // Note(avik): remove dynamic typecast once Flow has been upgraded
     // $FlowFixMe(>=0.41.0)
+    //React.Children.only:验证children是否只有一个节点（一个React元素），如果有则返回它，否则抛出异常错误
+    //参考：React.Children.only，https://zh-hans.reactjs.org/docs/react-api.html
     const child = React.Children.only(this.props.children);
     let children = child.props.children;
     if (Touchable.TOUCH_TARGET_DEBUG && child.type === View) {
+      //React.Children.toArray:将children这个复杂的数据结构以数组的方式扁平展开并返回，并为每个子节点分配一个key
+      //参考:React.Children.toArray，https://zh-hans.reactjs.org/docs/react-api.html
       children = React.Children.toArray(children);
       children.push(
         Touchable.renderDebugView({color: 'red', hitSlop: this.props.hitSlop}),
       );
     }
 
+    //testID属性通过this.props[testID]传入overrides
     const overrides = {};
     for (const prop of OVERRIDE_PROPS) {
       if (this.props[prop] !== undefined) {
@@ -267,6 +272,9 @@ const TouchableWithoutFeedback = ((createReactClass({
       }
     }
 
+    //React.cloneElement:以element元素为样板克隆并返回新的React元素。返回元素的props是将新的props与原始元素的props浅层结合后的结果
+    //参考：React.cloneElement,https://zh-hans.reactjs.org/docs/react-api.html#cloneelement
+    //overrides包含testID，解构最后传递给React.cloneElement()中
     return (React: any).cloneElement(child, {
       ...overrides,
       accessible: this.props.accessible !== false,

@@ -102,6 +102,7 @@ public abstract class BaseViewManager<T extends View, C extends LayoutShadowNode
     view.setLayerType(useHWTexture ? View.LAYER_TYPE_HARDWARE : View.LAYER_TYPE_NONE, null);
   }
 
+  //testID属性在Android Native对应的设置
   @ReactProp(name = ViewProps.TEST_ID)
   public void setTestId(@NonNull T view, String testId) {
     view.setTag(R.id.react_test_id, testId);
