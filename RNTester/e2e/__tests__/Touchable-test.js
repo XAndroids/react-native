@@ -23,28 +23,33 @@ describe('Touchable', () => {
     );
   });
 
+  //可点击的Highlight可以被点击
+  //验证TouchableHighlight onPress()属性
   it('Touchable Highlight should be tappable', async () => {
     await openExampleWithTitle('<TouchableHighlight>');
     const buttonID = 'touchable_highlight_image_button';
     const button2ID = 'touchable_highlight_text_button';
     const consoleID = 'touchable_highlight_console';
 
+    //第一次点击图片按钮，展示TouchableHighlight onPress文案
     await element(by.id(buttonID)).tap();
     await expect(element(by.id(consoleID))).toHaveText(
       'TouchableHighlight onPress',
     );
-
+    //第二次点击图片按钮，展示2x TouchableHighlight onPress文案
     await element(by.id(buttonID)).tap();
     await expect(element(by.id(consoleID))).toHaveText(
       '2x TouchableHighlight onPress',
     );
-
+    //点击文案按钮，展示3x TouchableHighlight onPress
     await element(by.id(button2ID)).tap();
     await expect(element(by.id(consoleID))).toHaveText(
       '3x TouchableHighlight onPress',
     );
   });
 
+  //可点击无反馈按钮可以被点击
+  //验证TouchableWithoutFeedback onPress()属性
   it('Touchable Without Feedback should be tappable', async () => {
     await openExampleWithTitle('<TouchableWithoutFeedback>');
 
@@ -62,6 +67,8 @@ describe('Touchable', () => {
     );
   });
 
+  //文案可以被点击
+  //验证Text onPress()属性
   it('Text should be tappable', async () => {
     await openExampleWithTitle('<Text onPress={fn}> with highlight');
 
