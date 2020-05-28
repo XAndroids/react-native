@@ -18,10 +18,13 @@ class DimensionsSubscription extends React.Component<
   {dims: Object},
 > {
   state = {
+    //Dimensions.get()获取window或者screen尺寸
+    //参考：https://reactnative.dev/docs/0.50/dimensions#set
     dims: Dimensions.get(this.props.dim),
   };
 
   componentDidMount() {
+    //Dimensions.addEventListener：当Dimensions对象的值(screen和window)改变的时候，触发change
     Dimensions.addEventListener('change', this._handleDimensionsChange);
   }
 
@@ -47,6 +50,8 @@ exports.examples = [
     title: 'useWindowDimensions hook',
     render(): React.Node {
       const DimensionsViaHook = () => {
+        //通过useWindowDimensions，当屏幕大小变化的时候，自动更新width和height；
+        //参考：https://reactnative.dev/docs/usewindowdimensions
         const dims = useWindowDimensions();
         return <Text>{JSON.stringify(dims, null, 2)}</Text>;
       };
