@@ -71,6 +71,9 @@ public class DeviceInfoModule extends BaseJavaModule
   @Override
   public void onHostDestroy() {}
 
+  /**
+   * 发送屏幕（Windows或Screen）尺寸变化事件didUpdateDimensions
+   */
   public void emitUpdateDimensionsEvent() {
     if (mReactApplicationContext == null) {
       return;

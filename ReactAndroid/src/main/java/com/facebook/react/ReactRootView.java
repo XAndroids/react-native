@@ -697,14 +697,15 @@ public class ReactRootView extends FrameLayout implements RootView, ReactRoot {
     }
 
     private void checkForDeviceDimensionsChanges() {
-      // Get current display metrics.
+      //获取当前显示的尺寸
       DisplayMetricsHolder.initDisplayMetrics(getContext());
-      // Check changes to both window and screen display metrics since they may not update at the
-      // same time.
+      //检查window和screen显示尺寸变化，因为它们可能不会同时更新
       if (!areMetricsEqual(mWindowMetrics, DisplayMetricsHolder.getWindowDisplayMetrics())
           || !areMetricsEqual(mScreenMetrics, DisplayMetricsHolder.getScreenDisplayMetrics())) {
+        //如果有变化，更新保存的当前Window和ScreenMetrics的值，
         mWindowMetrics.setTo(DisplayMetricsHolder.getWindowDisplayMetrics());
         mScreenMetrics.setTo(DisplayMetricsHolder.getScreenDisplayMetrics());
+        //发送尺寸更新事件
         emitUpdateDimensionsEvent();
       }
     }

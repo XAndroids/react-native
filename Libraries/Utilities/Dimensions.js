@@ -81,7 +81,7 @@ class Dimensions {
 
     dimensions = {window, screen};
     if (dimensionsInitialized) {
-      // Don't fire 'change' the first time the dimensions are set.
+      //不要在第一次设置尺寸的时候触发'change'
       eventEmitter.emit('change', dimensions);
     } else {
       dimensionsInitialized = true;
@@ -97,6 +97,7 @@ class Dimensions {
    *   `Dimensions.get('screen')`, respectively.
    */
   static addEventListener(type: 'change', handler: Function) {
+    //添加change Event的监听，当Native屏幕尺寸变化时，接受监听后最后会发送change Event
     invariant(
       type === 'change',
       'Trying to subscribe to unknown event: "%s"',
@@ -123,7 +124,8 @@ let initialDims: ?$ReadOnly<{[key: string]: any}> =
   global.nativeExtensions.DeviceInfo &&
   global.nativeExtensions.DeviceInfo.Dimensions;
 if (!initialDims) {
-  // Subscribe before calling getConstants to make sure we don't miss any updates in between.
+  //在调用getConstants之前订阅，以确保我们不会错过任何更新。
+  //监听ReactRootView中监听的屏幕(Window和Screen)屏幕尺寸变化消息
   RCTDeviceEventEmitter.addListener(
     'didUpdateDimensions',
     (update: DimensionsPayload) => {

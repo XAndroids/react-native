@@ -48,9 +48,11 @@ public class DisplayMetricsHolder {
   }
 
   public static void initDisplayMetrics(Context context) {
+    //获取Window显示的尺寸
     DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
     DisplayMetricsHolder.setWindowDisplayMetrics(displayMetrics);
 
+    //获取Screen显示的尺寸
     DisplayMetrics screenDisplayMetrics = new DisplayMetrics();
     screenDisplayMetrics.setTo(displayMetrics);
     WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
