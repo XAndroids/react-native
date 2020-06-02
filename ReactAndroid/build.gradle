@@ -91,6 +91,7 @@ task prepareFolly(dependsOn: dependenciesPath ? [] : [downloadFolly], type: Copy
     into("$thirdPartyNdkDir/folly")
 }
 
+//Hermes环境准备，从node_modules/hermes-engine复制so和Android.mk等文件
 task prepareHermes() {
     def hermesAAR = file("$projectDir/../node_modules/hermes-engine/android/hermes-debug.aar")
     if (!hermesAAR.exists()) {

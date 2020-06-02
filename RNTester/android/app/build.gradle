@@ -70,6 +70,7 @@ project.ext.react = [
     root: "$rootDir",
     inputExcludes: ["android/**", "./**", ".gradle/**"],
     composeSourceMapsPath: "$rootDir/scripts/compose-source-maps.js",
+    //引入node_modules的hermes-engine中的可执行文件
     hermesCommand: "../../../node_modules/hermes-engine/%OS-BIN%/hermes",
     enableHermesForVariant: { def v -> v.name.contains("hermes") }
 ]
@@ -150,7 +151,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
-    
+
     }
     packagingOptions {
        pickFirst 'lib/x86/libc++_shared.so'
@@ -168,6 +169,7 @@ dependencies {
     // Build React Native from source
     implementation project(':ReactAndroid')
 
+    //根据依赖类型，分别依赖debug和release.aar
     def hermesPath = '$projectDir/../../../../node_modules/hermes-engine/android/'
     debugImplementation files(hermesPath + "hermes-debug.aar")
     releaseImplementation files(hermesPath + "hermes-release.aar")

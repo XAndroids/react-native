@@ -28,6 +28,7 @@ def reactNativeInspectorProxyPort() {
     return value != null ? value : reactNativeDevServerPort()
 }
 
+//获取HermesOS名称
 def getHermesOSBin() {
     if (Os.isFamily(Os.FAMILY_WINDOWS)) return "win64-bin";
     if (Os.isFamily(Os.FAMILY_MAC)) return "osx-bin";
@@ -36,22 +37,20 @@ def getHermesOSBin() {
                         "to the path of a working Hermes compiler.");
 }
 
-// Make sure not to inspect the Hermes config unless we need it,
-// to avoid breaking any JSC-only setups.
+//除非我们需要它确保不检查Hermes的配置，来避免破坏任何支持JSC的配置
 def getHermesCommand = {
-    // If the project specifies a Hermes command, don't second guess it.
+    //如果项目指定了Hermes命令，就不要在怀疑了
     if (!hermesCommand.contains("%OS-BIN%")) {
         return hermesCommand
     }
 
-    // Execution on Windows fails with / as separator
+    //在Windwos上使用/作为分隔符执行失败
     return hermesCommand
             .replaceAll("%OS-BIN%", getHermesOSBin())
             .replace('/' as char, File.separatorChar);
 }
 
-// Set enableHermesForVariant to a function to configure per variant,
-// or set `enableHermes` to True/False to set all of them
+//设置enableHermesForVariant为配置每个variant的函数，或者将"enableHermes设置为true/falase来设置所有variant
 def enableHermesForVariant = config.enableHermesForVariant ?: {
     def variant -> config.enableHermes ?: false
 }
@@ -86,6 +85,7 @@ afterEvaluate {
         def nodeExecutableAndArgs = config.nodeExecutableAndArgs ?: ["node"]
         def extraPackagerArgs = config.extraPackagerArgs ?: []
 
+        //从project.ext.react的配置中获取是否开始hermes
         def enableHermes = enableHermesForVariant(variant)
 
         def currentBundleTask = tasks.create(
@@ -126,6 +126,7 @@ afterEvaluate {
                 extraArgs.add(bundleConfig);
             }
 
+            //根据不同的平台，执行命令打bundle包，是否启动hermes输出不同混淆文件
             if (Os.isFamily(Os.FAMILY_WINDOWS)) {
                 commandLine("cmd", "/c", *nodeExecutableAndArgs, cliPath, bundleCommand, "--platform", "android", "--dev", "${devEnabled}",
                     "--reset-cache", "--entry-file", entryFile, "--bundle-output", jsBundleFile, "--assets-dest", resourcesDir,
@@ -138,6 +139,7 @@ afterEvaluate {
 
             if (enableHermes) {
                 doLast {
+                    //如果启动hermes，使用hermes将jsBundle文件编译成hbc临时文件
                     def hermesFlags;
                     def hbcTempFile = file("${jsBundleFile}.hbc")
                     exec {
@@ -149,17 +151,21 @@ afterEvaluate {
                             hermesFlags = config.hermesFlagsDebug
                             if (hermesFlags == null) hermesFlags = []
                         }
-                        
+
                         if (Os.isFamily(Os.FAMILY_WINDOWS)) {
                             commandLine("cmd", "/c", getHermesCommand(), "-emit-binary", "-out", hbcTempFile, jsBundleFile, *hermesFlags)
                         } else {
                             commandLine(getHermesCommand(), "-emit-binary", "-out", hbcTempFile, jsBundleFile, *hermesFlags)
                         }
                     }
+
+                    //将编译的hbc文件移动到jsBundle文件目录
                     ant.move(
                         file: hbcTempFile,
                         toFile: jsBundleFile
                     );
+
+                    //将hbc.map文件移动到jsCompileSourceMap文件目录
                     if (hermesFlags.contains("-output-source-map")) {
                         ant.move(
                             // Hermes will generate a source map with this exact name
@@ -282,20 +288,19 @@ afterEvaluate {
         def vmSelectionAction = {
             fileTree(libDir).matching {
                 if (enableHermes) {
-                    // For Hermes, delete all the libjsc* files
+                    //如果启动了Hermes，删除所有的libjsc*文件
                     include "**/libjsc*.so"
 
                     if (isRelease) {
-                        // Reduce size by deleting the debugger/inspector
+                        //通过删除debugger/inspector减少size
                         include '**/libhermes-inspector.so'
                         include '**/libhermes-executor-debug.so'
                     } else {
-                        // Release libs take precedence and must be removed
-                        // to allow debugging
+                        //release库优先，所以必须移以允许debug
                         include '**/libhermes-executor-release.so'
                     }
                 } else {
-                    // For JSC, delete all the libhermes* files
+                    //如果是JSC，删除所有libhermes*文件
                     include "**/libhermes*.so"
                 }
             }.visit { details ->

@@ -286,11 +286,11 @@ public class ReactInstanceManagerBuilder {
 
   private JavaScriptExecutorFactory getDefaultJSExecutorFactory(String appName, String deviceName) {
     try {
-      // If JSC is included, use it as normal
+      //如果包含JSC，则正常使用它
       SoLoader.loadLibrary("jscexecutor");
       return new JSCExecutorFactory(appName, deviceName);
     } catch (UnsatisfiedLinkError jscE) {
-      // Otherwise use Hermes
+      //否则使用Hermes
       return new HermesExecutorFactory();
     }
   }
