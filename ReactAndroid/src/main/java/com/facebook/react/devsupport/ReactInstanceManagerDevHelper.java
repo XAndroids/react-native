@@ -13,15 +13,15 @@ import com.facebook.react.bridge.JavaScriptExecutorFactory;
 import com.facebook.react.bridge.NativeDeltaClient;
 
 /**
- * Interface used by {@link DevSupportManager} for accessing some fields and methods of {@link
- * ReactInstanceManager} for the purpose of displaying and handling developer menu options.
+ * 由{@link DevSupportManager}用于访问 {@link ReactInstanceManager}的一些字段和方法的接口。用于显示和处理开
+ * 发人员菜单选项。
  */
 public interface ReactInstanceManagerDevHelper {
 
-  /** Request react instance recreation with JS debugging enabled. */
+  /** 在启用JS调试的情况下，请求react instance重新创建。*/
   void onReloadWithJSDebugger(JavaJSExecutor.Factory proxyExecutorFactory);
 
-  /** Notify react instance manager about new JS bundle version downloaded from the server. */
+  /** 通知react instance manager 从服务器下载的新JS bundle版本。*/
   void onJSBundleLoadedFromServer(@Nullable NativeDeltaClient nativeDeltaClient);
 
   /** Request to toggle the react element inspector. */

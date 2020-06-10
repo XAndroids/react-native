@@ -364,10 +364,8 @@ public class ReactRootView extends FrameLayout implements RootView, ReactRoot {
   }
 
   /**
-   * Schedule rendering of the react component rendered by the JS application from the given JS
-   * module (@{param moduleName}) using provided {@param reactInstanceManager} to attach to the JS
-   * context of that manager. Extra parameter {@param launchOptions} can be used to pass initial
-   * properties for the react component.
+   * 使用提供的{@param reactInstanceManager}从给定的JS模块(@{param moduleName})调用JS应用程序渲染react组件，
+   * 以附加到管理的JS Context。额外的参数 {@param launchOptions}被用于传递react组件的初始属性
    */
   public void startReactApplication(
       ReactInstanceManager reactInstanceManager,

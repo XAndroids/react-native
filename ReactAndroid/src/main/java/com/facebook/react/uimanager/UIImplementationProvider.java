@@ -10,7 +10,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.events.EventDispatcher;
 import java.util.List;
 
-/** Provides UIImplementation to use in {@link UIManagerModule}. */
+/** 提供在 {@link UIManagerModule}中使用的UIImplementation。*/
 @Deprecated
 public class UIImplementationProvider {
 

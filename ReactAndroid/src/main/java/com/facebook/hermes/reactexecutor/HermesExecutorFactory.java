@@ -9,6 +9,9 @@ package com.facebook.hermes.reactexecutor;
 import com.facebook.react.bridge.JavaScriptExecutor;
 import com.facebook.react.bridge.JavaScriptExecutorFactory;
 
+/**
+ * Hermes引擎执行器工厂
+ */
 public class HermesExecutorFactory implements JavaScriptExecutorFactory {
   private static final String TAG = "Hermes";
 

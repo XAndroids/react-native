@@ -15,7 +15,7 @@ import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.modules.core.PermissionAwareActivity;
 import com.facebook.react.modules.core.PermissionListener;
 
-/** Base Activity for React Native applications. */
+/** React Native应用基础Activity */
 public abstract class ReactActivity extends AppCompatActivity
     implements DefaultHardwareBackBtnHandler, PermissionAwareActivity {
 
@@ -26,14 +26,13 @@ public abstract class ReactActivity extends AppCompatActivity
   }
 
   /**
-   * Returns the name of the main component registered from JavaScript. This is used to schedule
-   * rendering of the component. e.g. "MoviesApp"
+   * 返回JavaScript注册的主组件的名称。用于安排组件的渲染。如"MoviesApp"
    */
   protected @Nullable String getMainComponentName() {
     return null;
   }
 
-  /** Called at construction time, override if you have a custom delegate implementation. */
+  /**在构造时调用，如果有自定义代理实现则重写*/
   protected ReactActivityDelegate createReactActivityDelegate() {
     return new ReactActivityDelegate(this, getMainComponentName());
   }

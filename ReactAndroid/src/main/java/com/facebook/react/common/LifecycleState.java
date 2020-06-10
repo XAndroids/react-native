@@ -7,10 +7,8 @@
 package com.facebook.react.common;
 
 /**
- * Lifecycle state for an Activity. The state right after pause and right before resume are the
- * basically the same so this enum is in terms of the forward lifecycle progression (onResume, etc).
- * Eventually, if necessary, it could contain something like:
- *
+ * Activity的生命周期状态。pause之后和resume之前的状态基本是一样的，所以这个枚举是指向生命周期进程(onResume, etc)。
+ * 最终，如果有必要，它会包含一下内容：
  * <p>BEFORE_CREATE, CREATED, VIEW_CREATED, STARTED, RESUMED
  */
 public enum LifecycleState {

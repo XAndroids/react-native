@@ -11,8 +11,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Static class that allows markers to be placed in React code and responded to in a configurable
- * way
+ * 静态类，允许将标识放置在Reat代码中，并可以以配置的方式对其进行响应
  */
 @DoNotStrip
 public class ReactMarker {
@@ -21,16 +20,13 @@ public class ReactMarker {
     void logMarker(ReactMarkerConstants name, @Nullable String tag, int instanceKey);
   };
 
-  // This is for verbose, Fabric-only logging
-  // In the future we can deprecate the old logMarker API and
+  //这是为了冗长， 未来我们可以启用旧的logMarker API
   public interface FabricMarkerListener {
     void logFabricMarker(
         ReactMarkerConstants name, @Nullable String tag, int instanceKey, long timestamp);
   };
 
-  // Use a list instead of a set here because we expect the number of listeners
-  // to be very small, and we want listeners to be called in a deterministic
-  // order.
+  //这里使用list替代set，是因为我们希望listener的数量非常小，并且我们希望listner按照确定顺序调用。
   private static final List<MarkerListener> sListeners = new CopyOnWriteArrayList<>();
 
   // Use a list instead of a set here because we expect the number of listeners

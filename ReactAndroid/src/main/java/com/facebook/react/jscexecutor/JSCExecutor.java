@@ -12,6 +12,9 @@ import com.facebook.react.bridge.JavaScriptExecutor;
 import com.facebook.react.bridge.ReadableNativeMap;
 import com.facebook.soloader.SoLoader;
 
+/**
+ * JSC引擎执行器，在这里调用JSC引擎
+ */
 @DoNotStrip
 /* package */ class JSCExecutor extends JavaScriptExecutor {
   static {

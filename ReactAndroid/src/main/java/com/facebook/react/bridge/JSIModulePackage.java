@@ -8,10 +8,10 @@ package com.facebook.react.bridge;
 
 import java.util.List;
 
-/** Interface used to initialize JSI Modules into the JSI Bridge. */
+/** 用于初始化JSI Modules到JSI Brdidge的接口。*/
 public interface JSIModulePackage {
 
-  /** @return a {@link List< JSIModuleSpec >} that contain the list of JSI Modules. */
-  List<JSIModuleSpec> getJSIModules(
+  /**返回包含JSI Module列表的{@link List<JSIModuleSpec>}。*/
+   List<JSIModuleSpec> getJSIModules(
       ReactApplicationContext reactApplicationContext, JavaScriptContextHolder jsContext);
 }

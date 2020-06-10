@@ -12,6 +12,7 @@ import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 
 public class RNTesterActivity extends ReactActivity {
+  //RNTesterActivity代理
   public static class RNTesterActivityDelegate extends ReactActivityDelegate {
     private static final String PARAM_ROUTE = "route";
     private Bundle mInitialProps = null;
@@ -24,7 +25,7 @@ public class RNTesterActivity extends ReactActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-      // Get remote param before calling super which uses it
+      //在调用使用它的super之前得到远程参数
       Bundle bundle = mActivity.getIntent().getExtras();
       if (bundle != null && bundle.containsKey(PARAM_ROUTE)) {
         String routeUri =
@@ -51,6 +52,7 @@ public class RNTesterActivity extends ReactActivity {
 
   @Override
   protected String getMainComponentName() {
+    //返回JavaScript注册的主组件的名称。用于安排组件的渲染。如"MoviesApp"
     return "RNTesterApp";
   }
 }

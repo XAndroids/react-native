@@ -10,15 +10,14 @@ import android.content.Context;
 import com.facebook.react.common.DebugServerException;
 
 /**
- * A class that stores JS bundle information and allows a {@link JSBundleLoaderDelegate} (e.g.
- * {@link CatalystInstance}) to load a correct bundle through {@link ReactBridge}.
+ * 一个存储JS bundle信息，并允许{@link JSBundleLoaderDelegate} (e.g.{@link CatalystInstance})通过
+ * {@link ReactBridge}加载正确bundle的类。
  */
 public abstract class JSBundleLoader {
 
   /**
-   * This loader is recommended one for release version of your app. In that case local JS executor
-   * should be used. JS bundle will be read from assets in native code to save on passing large
-   * strings from java to native memory.
+   * 这个loader推荐用于你的应用的release版本。在这种情况下，应用使用本地JS executor。JS bundle将从本地代码的assets
+   * 中读取，以节省将大字符串传递到本地内存的时间。
    */
   public static JSBundleLoader createAssetLoader(
       final Context context, final String assetUrl, final boolean loadSynchronously) {
@@ -51,11 +50,9 @@ public abstract class JSBundleLoader {
   }
 
   /**
-   * This loader is used when bundle gets reloaded from dev server. In that case loader expect JS
-   * bundle to be prefetched and stored in local file. We do that to avoid passing large strings
-   * between java and native code and avoid allocating memory in java to fit whole JS bundle in it.
-   * Providing correct {@param sourceURL} of downloaded bundle is required for JS stacktraces to
-   * work correctly and allows for source maps to correctly symbolize those.
+   * 这个loader在bundle从dev server重新加载时使用。在这种情况下，加载器希望JS bundler被预取并存储在本地文件中。
+   * 这样做是为了避免在java和native代码之间传递大字符串，并避免在java中分配内存来容纳整个JS包。提供下载bundle的
+   * 正确的 {@param sourceURL}是JS堆栈跟踪正确工作的必要条件，并允许源映射正确的标识这些。
    */
   public static JSBundleLoader createCachedBundleFromNetworkLoader(
       final String sourceURL, final String cachedFileLocation) {
@@ -73,10 +70,8 @@ public abstract class JSBundleLoader {
   }
 
   /**
-   * This loader is used to load delta bundles from the dev server. We pass each delta message to
-   * the loader and process it in C++. Passing it as a string leads to inefficiencies due to memory
-   * copies, which will have to be addressed in a follow-up.
-   *
+   * 这个loader用于从dev server加载增量包。我们将每个增量消息传递给加载器，并用C++处理它。将其作为字符串传递会由于
+   * 内存副本而导致效率低下，这将在后续处理中得到解决。
    * @param nativeDeltaClient
    */
   public static JSBundleLoader createDeltaFromNetworkLoader(
@@ -109,6 +104,6 @@ public abstract class JSBundleLoader {
     };
   }
 
-  /** Loads the script, returning the URL of the source it loaded. */
+  /** 加载script，返回它加载代码的URL。*/
   public abstract String loadScript(JSBundleLoaderDelegate delegate);
 }

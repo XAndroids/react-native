@@ -57,7 +57,7 @@ public class AndroidInfoHelpers {
   // changes should be applied to both.
   public static String getFriendlyDeviceName() {
     if (isRunningOnGenymotion()) {
-      // Genymotion already has a friendly name by default
+      //Genymotion默认已经有一个友好的名字
       return Build.MODEL;
     } else {
       return Build.MODEL + " - " + Build.VERSION.RELEASE + " - API " + Build.VERSION.SDK_INT;

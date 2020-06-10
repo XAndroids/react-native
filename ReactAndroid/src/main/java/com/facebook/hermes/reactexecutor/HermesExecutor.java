@@ -12,6 +12,9 @@ import com.facebook.react.bridge.JavaScriptExecutor;
 import com.facebook.soloader.SoLoader;
 import javax.annotation.Nullable;
 
+/**
+ * Hermes引擎执行器，在这里调用JS引擎
+ */
 public class HermesExecutor extends JavaScriptExecutor {
   private static String mode_;
 

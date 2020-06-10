@@ -22,27 +22,32 @@ public class RNTesterApplication extends Application implements ReactApplication
       new ReactNativeHost(this) {
         @Override
         public String getJSMainModuleName() {
+          //用于请求Packager Server加载的Main Module名称
           return "RNTester/js/RNTesterApp.android";
         }
 
         @Override
         public String getBundleAssetName() {
+          //内置bundle的加载名称
           return "RNTesterApp.android.bundle";
         }
 
         @Override
         public boolean getUseDeveloperSupport() {
+          //允许打开Dev菜单，和Reload JS等
           return BuildConfig.DEBUG;
         }
 
         @Override
         public List<ReactPackage> getPackages() {
+          //注册的Packager
           return Arrays.<ReactPackage>asList(new MainReactPackage());
         }
       };
 
   @Override
   public void onCreate() {
+    //添加自定义的iconfont字体
     ReactFontManager.getInstance().addCustomFont(this, "Rubik", R.font.rubik);
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);

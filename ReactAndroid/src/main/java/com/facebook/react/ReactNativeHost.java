@@ -19,19 +19,20 @@ import com.facebook.react.uimanager.UIImplementationProvider;
 import java.util.List;
 
 /**
- * Simple class that holds an instance of {@link ReactInstanceManager}. This can be used in your
- * {@link Application class} (see {@link ReactApplication}), or as a static field.
+ * 一个简单的类，它持有 {@link ReactInstanceManager}的实例。可以在你的{@link Application class} (see
+ * {@link ReactApplication})中使用，或者作为静态字段使用。
  */
 public abstract class ReactNativeHost {
 
   private final Application mApplication;
+  //单例
   private @Nullable ReactInstanceManager mReactInstanceManager;
 
   protected ReactNativeHost(Application application) {
     mApplication = application;
   }
 
-  /** Get the current {@link ReactInstanceManager} instance, or create one. */
+  /**获取当前的 {@link ReactInstanceManager} 实例，或者创建一个。*/
   public ReactInstanceManager getReactInstanceManager() {
     if (mReactInstanceManager == null) {
       ReactMarker.logMarker(ReactMarkerConstants.GET_REACT_INSTANCE_MANAGER_START);
@@ -42,9 +43,8 @@ public abstract class ReactNativeHost {
   }
 
   /**
-   * Get whether this holder contains a {@link ReactInstanceManager} instance, or not. I.e. if
-   * {@link #getReactInstanceManager()} has been called at least once since this object was created
-   * or {@link #clear()} was called.
+   * 获取该holder是否包含{@link ReactInstanceManager}实例。例如，如果{@link #getReactInstanceManager()}
+   * 在创建对象后至少被调用一次，或者{@link #clear()}被调用。
    */
   public boolean hasInstance() {
     return mReactInstanceManager != null;
@@ -62,6 +62,7 @@ public abstract class ReactNativeHost {
 
   protected ReactInstanceManager createReactInstanceManager() {
     ReactMarker.logMarker(ReactMarkerConstants.BUILD_REACT_INSTANCE_MANAGER_START);
+
     ReactInstanceManagerBuilder builder =
         ReactInstanceManager.builder()
             .setApplication(mApplication)
@@ -76,7 +77,7 @@ public abstract class ReactNativeHost {
     for (ReactPackage reactPackage : getPackages()) {
       builder.addPackage(reactPackage);
     }
-
+    //在assets目录下内置bundle包
     String jsBundleFile = getJSBundleFile();
     if (jsBundleFile != null) {
       builder.setJSBundleFile(jsBundleFile);
@@ -88,12 +89,12 @@ public abstract class ReactNativeHost {
     return reactInstanceManager;
   }
 
-  /** Get the {@link RedBoxHandler} to send RedBox-related callbacks to. */
+  /** 获取{@link RedBoxHandler}来发送红RedBox-related相关的回调。*/
   protected @Nullable RedBoxHandler getRedBoxHandler() {
     return null;
   }
 
-  /** Get the {@link JavaScriptExecutorFactory}. Override this to use a custom Executor. */
+  /** 获取{@link JavaScriptExecutorFactory}。重写它使用自定义Executor。*/
   protected @Nullable JavaScriptExecutorFactory getJavaScriptExecutorFactory() {
     return null;
   }
@@ -103,10 +104,9 @@ public abstract class ReactNativeHost {
   }
 
   /**
-   * Get the {@link UIImplementationProvider} to use. Override this method if you want to use a
-   * custom UI implementation.
+   * 获取要使用的{@link UIImplementationProvider}。如果你想使用自定义的UI实现重写这个方法。
    *
-   * <p>Note: this is very advanced functionality, in 99% of cases you don't need to override this.
+   * <p>注意：这是非常高级的功能，在99%的情况下，你不需要重写它。
    */
   protected UIImplementationProvider getUIImplementationProvider() {
     return new UIImplementationProvider();
@@ -117,33 +117,31 @@ public abstract class ReactNativeHost {
   }
 
   /**
-   * Returns the name of the main module. Determines the URL used to fetch the JS bundle from the
-   * packager server. It is only used when dev support is enabled. This is the first file to be
-   * executed once the {@link ReactInstanceManager} is created. e.g. "index.android"
+   * 返回main module的名称。确定用于从packeger server获取JS bundle的URL。它只在启用dev support时使用。这是在创
+   * 建{@link ReactInstanceManager}后第一个执行的文件。如"index.android"
    */
   protected String getJSMainModuleName() {
     return "index.android";
   }
 
   /**
-   * Returns a custom path of the bundle file. This is used in cases the bundle should be loaded
-   * from a custom path. By default it is loaded from Android assets, from a path specified by
-   * {@link getBundleAssetName}. e.g. "file://sdcard/myapp_cache/index.android.bundle"
+   * 返回bundle文件自定义路径。这用于bundle应该从自定义路径加载的情况。默认情况下它从Android assets加载，由
+   * {@link getBundleAssetName }指定的路径。如： "file://sdcard/myapp_cache/index.android.bundle"
    */
   protected @Nullable String getJSBundleFile() {
     return null;
   }
 
   /**
-   * Returns the name of the bundle in assets. If this is null, and no file path is specified for
-   * the bundle, the app will only work with {@code getUseDeveloperSupport} enabled and will always
-   * try to load the JS bundle from the packager server. e.g. "index.android.bundle"
+   * 返回bundle在assets中的名字。如果它为null，并且没有指定bundle包的文件路径，应用程序将只在
+   * {@code getUseDeveloperSupport}启用的情况下工作，并且总是尝试从packager server加载JS Bundle。如："index
+   * .android.bundle"
    */
   protected @Nullable String getBundleAssetName() {
     return "index.android.bundle";
   }
 
-  /** Returns whether dev mode should be enabled. This enables e.g. the dev menu. */
+  /** 返回是否dev模式启动。这将启用如dev菜单。*/
   public abstract boolean getUseDeveloperSupport();
 
   /**

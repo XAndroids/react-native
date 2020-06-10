@@ -16,8 +16,7 @@ import com.facebook.react.devsupport.DoubleTapReloadRecognizer;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 
 /**
- * A delegate for handling React Application support. This delegate is unaware whether it is used in
- * an {@link Activity} or a {@link android.app.Fragment}.
+ *处理React应用支持的代理。这个代理不知道它是在一个Activity或者Fragment中使用
  */
 public class ReactDelegate {
 
@@ -112,18 +111,21 @@ public class ReactDelegate {
   }
 
   /**
-   * Handles delegating the {@link Activity#onKeyUp(int, KeyEvent)} method to determine whether the
-   * application should show the developer menu or should reload the React Application.
+   * 处理委派{@link Activity#onKeyUp(int, KeyEvent)}方法类决定应用程序是否应该显示developer菜单，还是应该重新
+   * 加载React应用程序。
    *
-   * @return true if we consume the event and either shoed the develop menu or reloaded the
-   *     application.
+   * @return 如果我们使用该事件并加载开发菜单或重新加载应用程序，则为true。
    */
   public boolean shouldShowDevMenuOrReload(int keyCode, KeyEvent event) {
     if (getReactNativeHost().hasInstance() && getReactNativeHost().getUseDeveloperSupport()) {
+      //是开发者模式
       if (keyCode == KeyEvent.KEYCODE_MENU) {
+        //打开开发选项对话框
         getReactNativeHost().getReactInstanceManager().showDevOptionsDialog();
         return true;
       }
+
+      //如果双击"R"，重新加载JS
       boolean didDoubleTapR =
           Assertions.assertNotNull(mDoubleTapReloadRecognizer)
               .didDoubleTapR(keyCode, mActivity.getCurrentFocus());

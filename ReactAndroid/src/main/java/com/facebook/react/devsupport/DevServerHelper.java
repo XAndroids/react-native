@@ -52,11 +52,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Helper class for all things about the debug server running in the engineer's host machine.
- *
- * <p>One can use 'debug_http_host' shared preferences key to provide a host name for the debug
- * server. If the setting is empty we support and detect two basic configuration that works well for
- * android emulators connection to debug server running on emulator's host:
+ * 关于在工程师主机上运行debug server的所有事情的帮助类。
+ * <p>可以使用'debug_http_host' share preference key来为debug服务提供host名字。如果我们的设置为空，我们支持
+ * 和检测两个基本配置，在android模拟器连接运行在模拟器上的debug server上工作良好。
  *
  * <ul>
  *   <li>Android stock emulator with standard non-configurable local loopback alias: 10.0.2.2
@@ -392,6 +390,7 @@ public class DevServerHelper {
         AndroidInfoHelpers.getFriendlyDeviceName());
   }
 
+  //从指定的URL下载Bundle
   public void downloadBundleFromURL(
       DevBundleDownloadListener callback,
       File outputFile,
@@ -479,6 +478,7 @@ public class DevServerHelper {
         mSettings.getPackagerConnectionSettings().getDebugServerHost());
   }
 
+  //请求debugserver判断是否正在打包
   public void isPackagerRunning(final PackagerStatusCallback callback) {
     String statusURL =
         createPackagerStatusURL(mSettings.getPackagerConnectionSettings().getDebugServerHost());

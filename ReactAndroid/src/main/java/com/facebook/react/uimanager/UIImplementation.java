@@ -32,8 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A class that is used to receive React commands from JS and translate them into a shadow node
- * hierarchy that is then mapped to a native view hierarchy.
+ * 用于从JS接受React命令，并将其转换成shadow node结构，然后映射到native视图结构的类。
  */
 public class UIImplementation {
   protected Object uiImplementationThreadLock = new Object();

@@ -14,9 +14,8 @@ import com.facebook.react.modules.debug.interfaces.DeveloperSettings;
 import java.io.File;
 
 /**
- * Interface for accessing and interacting with development features. In dev mode, use the
- * implementation {@link DevSupportManagerImpl}. In production mode, use the dummy implementation
- * {@link DisabledDevSupportManager}.
+ * 用于访问和开发功能交互的接口。在dev模式下，使用实现 {@link DevSupportManagerImpl}。在生产模式下，使用虚拟实现
+ * {@link DisabledDevSupportManager}。
  */
 public interface DevSupportManager extends NativeModuleCallExceptionHandler {
 
@@ -30,6 +29,7 @@ public interface DevSupportManager extends NativeModuleCallExceptionHandler {
 
   void hideRedboxDialog();
 
+  //显示开发选项对话框
   void showDevOptionsDialog();
 
   void setDevSupportEnabled(boolean isDevSupportEnabled);
@@ -58,10 +58,12 @@ public interface DevSupportManager extends NativeModuleCallExceptionHandler {
 
   void reloadSettings();
 
+  //重新加载JS
   void handleReloadJS();
 
   void reloadJSFromServer(final String bundleURL);
 
+  //Packager Server是否正在运行
   void isPackagerRunning(PackagerStatusCallback callback);
 
   void setHotModuleReplacementEnabled(final boolean isHotModuleReplacementEnabled);

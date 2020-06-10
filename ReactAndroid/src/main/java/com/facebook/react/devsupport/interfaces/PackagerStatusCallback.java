@@ -6,6 +6,9 @@
  */
 package com.facebook.react.devsupport.interfaces;
 
+/**
+ * Package Server状态回调：是否正在打包
+ */
 public interface PackagerStatusCallback {
   void onPackagerStatusFetched(boolean packagerIsRunning);
 }

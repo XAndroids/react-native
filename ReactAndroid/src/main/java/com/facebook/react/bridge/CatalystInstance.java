@@ -15,9 +15,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * A higher level API on top of the asynchronous JSC bridge. This provides an environment allowing
- * the invocation of JavaScript methods and lets a set of Java APIs be invokable from JavaScript as
- * well.
+ * 在异步JSC bridge上的更高级的API。这提供了一个允许调用JavaScript方法的环境，也允许从JavaScript调用一组Java api。
  */
 @DoNotStrip
 public interface CatalystInstance

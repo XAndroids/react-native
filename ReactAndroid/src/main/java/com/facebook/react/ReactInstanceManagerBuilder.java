@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/** Builder class for {@link ReactInstanceManager} */
+/** {@link ReactInstanceManager}的Bundler类 */
 public class ReactInstanceManagerBuilder {
 
   private final List<ReactPackage> mPackages = new ArrayList<>();
@@ -114,9 +114,8 @@ public class ReactInstanceManagerBuilder {
   }
 
   /**
-   * Path to your app's main module on the packager server. This is used when reloading JS during
-   * development. All paths are relative to the root folder the packager is serving files from.
-   * Examples: {@code "index.android"} or {@code "subdirectory/index.android"}
+   * 在packager srever上你的应用的main module的路径。这是在开发期间重新加载JS时使用的。所有路径都相对于packager
+   * 提供的根文件夹。例如：{@code "index.android"} or {@code "subdirectory/index.android"}
    */
   public ReactInstanceManagerBuilder setJSMainModulePath(String jsMainModulePath) {
     mJSMainModulePath = jsMainModulePath;
@@ -157,9 +156,8 @@ public class ReactInstanceManagerBuilder {
   }
 
   /**
-   * When {@code true}, developer options such as JS reloading and debugging are enabled. Note you
-   * still have to call {@link #showDevOptionsDialog} to show the dev menu, e.g. when the device
-   * Menu button is pressed.
+   * 当{@code true}时，启用JS重载和调试等开发选项。注意，你仍然需要调用{@link #showDevOptionsDialog}来显示dev
+   * 菜单，例如当设备菜单按钮被按下时。
    */
   public ReactInstanceManagerBuilder setUseDeveloperSupport(boolean useDeveloperSupport) {
     mUseDeveloperSupport = useDeveloperSupport;
@@ -221,13 +219,11 @@ public class ReactInstanceManagerBuilder {
   }
 
   /**
-   * Instantiates a new {@link ReactInstanceManager}. Before calling {@code build}, the following
-   * must be called:
-   *
+   * 初始化新的 {@link ReactInstanceManager}，在调用{@code build}自谦，必须调用一下代码：
    * <ul>
    *   <li>{@link #setApplication}
-   *   <li>{@link #setCurrentActivity} if the activity has already resumed
-   *   <li>{@link #setDefaultHardwareBackBtnHandler} if the activity has already resumed
+   *   <li>{@link #setCurrentActivity} 如果activity已经resumed
+   *   <li>{@link #setDefaultHardwareBackBtnHandler}  如果activity已经resumed
    *   <li>{@link #setJSBundleFile} or {@link #setJSMainModulePath}
    * </ul>
    */
@@ -249,14 +245,16 @@ public class ReactInstanceManagerBuilder {
         "Either MainModulePath or JS Bundle File needs to be provided");
 
     if (mUIImplementationProvider == null) {
-      // create default UIImplementationProvider if the provided one is null.
+      //如果提供的是null，创建默认的UIImplementationProvider。
       mUIImplementationProvider = new UIImplementationProvider();
     }
 
-    // We use the name of the device and the app for debugging & metrics
+    //我们使用设备和应用程序的名称来进行调试和测量
     String appName = mApplication.getPackageName();
     String deviceName = getFriendlyDeviceName();
 
+    //mJavaScriptExecutorFactory决定用什么JS引擎
+    //mJSBundleLoader决定从哪里加载Bundler
     return new ReactInstanceManager(
         mApplication,
         mCurrentActivity,
@@ -284,6 +282,7 @@ public class ReactInstanceManagerBuilder {
         mCustomPackagerCommandHandlers);
   }
 
+  //没有自定义设置JavaScriptExecutorFactory，则调用默认逻辑，先调用JSC异常调用Hermes
   private JavaScriptExecutorFactory getDefaultJSExecutorFactory(String appName, String deviceName) {
     try {
       //如果包含JSC，则正常使用它

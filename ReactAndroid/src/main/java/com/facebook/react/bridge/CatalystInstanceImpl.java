@@ -38,12 +38,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * This provides an implementation of the public CatalystInstance instance. It is public because it
- * is built by XReactInstanceManager which is in a different package.
+ * 提供了一个公开CatalystInstance实例的实现。它是public，因为它是由XReactInstanceManager构建的，在不同的包中。
  */
 @DoNotStrip
 public class CatalystInstanceImpl implements CatalystInstance {
   static {
+    //加载reactnativejni so，后续调用相关方法执行JSBundle加载等
     ReactBridge.staticInit();
   }
 
@@ -134,6 +134,7 @@ public class CatalystInstanceImpl implements CatalystInstance {
 
     Log.d(ReactConstants.TAG, "Initializing React Xplat Bridge before initializeBridge");
     Systrace.beginSection(TRACE_TAG_REACT_JAVA_BRIDGE, "initializeCxxBridge");
+    //初始化Bridge，将jsExecutor传入，用于后期执行JS
     initializeBridge(
         new BridgeCallback(this),
         jsExecutor,
@@ -224,12 +225,14 @@ public class CatalystInstanceImpl implements CatalystInstance {
   public void loadScriptFromAssets(
       AssetManager assetManager, String assetURL, boolean loadSynchronously) {
     mSourceURL = assetURL;
+    //调用jni相关方法从assets加载bundle
     jniLoadScriptFromAssets(assetManager, assetURL, loadSynchronously);
   }
 
   @Override
   public void loadScriptFromFile(String fileName, String sourceURL, boolean loadSynchronously) {
     mSourceURL = sourceURL;
+    //调用jni相关方法从文件系统加载bundle
     jniLoadScriptFromFile(fileName, sourceURL, loadSynchronously);
   }
 
@@ -247,6 +250,7 @@ public class CatalystInstanceImpl implements CatalystInstance {
   private native void jniLoadScriptFromAssets(
       AssetManager assetManager, String assetURL, boolean loadSynchronously);
 
+  //调用native的方法，加载执行JS
   private native void jniLoadScriptFromFile(
       String fileName, String sourceURL, boolean loadSynchronously);
 

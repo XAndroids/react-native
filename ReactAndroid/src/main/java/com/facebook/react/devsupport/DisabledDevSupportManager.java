@@ -19,8 +19,7 @@ import com.facebook.react.modules.debug.interfaces.DeveloperSettings;
 import java.io.File;
 
 /**
- * A dummy implementation of {@link DevSupportManager} to be used in production mode where
- * development features aren't needed.
+ *  {@link DevSupportManager}的虚拟实现，用于不需要开发特性的生产模式。
  */
 public class DisabledDevSupportManager implements DevSupportManager {
 

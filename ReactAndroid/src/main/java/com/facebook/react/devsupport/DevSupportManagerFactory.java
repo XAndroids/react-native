@@ -15,10 +15,8 @@ import java.lang.reflect.Constructor;
 import java.util.Map;
 
 /**
- * A simple factory that creates instances of {@link DevSupportManager} implementations. Uses
- * reflection to create DevSupportManagerImpl if it exists. This allows ProGuard to strip that class
- * and its dependencies in release builds. If the class isn't found, {@link
- * DisabledDevSupportManager} is returned instead.
+ * 一个创建 {@link DevSupportManager}实现实例的简单工厂。如果DevSupportManagerImpl存在，则使用反射创建它。这
+ * 允许Proguard在发布版本中剥离该类及其依赖关系。如果没有找到该类，则返回{@link DisabledDevSupportManager}。
  */
 public class DevSupportManagerFactory {
 
@@ -52,13 +50,14 @@ public class DevSupportManagerFactory {
       @Nullable DevBundleDownloadListener devBundleDownloadListener,
       int minNumShakes,
       @Nullable Map<String, RequestHandler> customPackagerCommandHandlers) {
+    //如果不是debug模式，则不支持debug支持的功能，使用Dev虚拟实现
     if (!enableOnCreate) {
       return new DisabledDevSupportManager();
     }
     try {
-      // ProGuard is surprisingly smart in this case and will keep a class if it detects a call to
-      // Class.forName() with a static string. So instead we generate a quasi-dynamic string to
-      // confuse it.
+      //如果是debug模式，则使用DEV实现，支持debug等功能
+      // ProGuard在这种情况下非常聪明，如果它检测到lass.forName()的静态字符串调用，它会保留一个类。所以我们生成
+      // 一个准动态字符串来混淆它。
       String className =
           new StringBuilder(DEVSUPPORT_IMPL_PACKAGE)
               .append(".")

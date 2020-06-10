@@ -18,9 +18,8 @@ import com.facebook.react.bridge.Callback;
 import com.facebook.react.modules.core.PermissionListener;
 
 /**
- * Delegate class for {@link ReactActivity} and {@link ReactFragmentActivity}. You can subclass this
- * to provide custom implementations for e.g. {@link #getReactNativeHost()}, if your Application
- * class doesn't implement {@link ReactApplication}.
+ * ReactActivity和ReactFragmentActivity代理类.如果你的应用没有实现ReactApplication，你可以将其子类化提供如
+ * getReactNativeHost()的自定义实现
  */
 public class ReactActivityDelegate {
 
@@ -86,6 +85,7 @@ public class ReactActivityDelegate {
 
   protected void loadApp(String appKey) {
     mReactDelegate.loadApp(appKey);
+    //将ReactRootView设置为Activity的ContentView
     getPlainActivity().setContentView(mReactDelegate.getReactRootView());
   }
 
@@ -121,6 +121,7 @@ public class ReactActivityDelegate {
   }
 
   public boolean onKeyUp(int keyCode, KeyEvent event) {
+    //按键完毕之后，检查是否双击"R"，reload JS
     return mReactDelegate.shouldShowDevMenuOrReload(keyCode, event);
   }
 

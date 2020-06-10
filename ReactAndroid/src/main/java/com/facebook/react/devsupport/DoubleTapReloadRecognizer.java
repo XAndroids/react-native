@@ -12,8 +12,8 @@ import android.view.View;
 import android.widget.EditText;
 
 /**
- * A class allows recognizing double key tap of "R", used to reload JS in {@link
- * AbstractReactActivity}, {@link RedBoxDialog} and {@link ReactActivity}.
+ * 一个类允许识别"R"的双击，用于重载{@link AbstractReactActivity},{@link RedBoxDialog}
+ * 和{@link ReactActivity}的JS。
  */
 public class DoubleTapReloadRecognizer {
   private boolean mDoRefresh = false;

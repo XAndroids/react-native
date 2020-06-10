@@ -840,7 +840,7 @@ public class DevSupportManagerImpl
 
   @Override
   public void handleReloadJS() {
-
+    //开发模式，加载JS
     UiThreadUtil.assertOnUiThread();
 
     ReactMarker.logMarker(
@@ -851,12 +851,14 @@ public class DevSupportManagerImpl
     hideRedboxDialog();
 
     if (mDevSettings.isRemoteJSDebugEnabled()) {
+      //如果启动的远程JS Debug，使用Proxy Mode加载JS
       PrinterHolder.getPrinter()
           .logMessage(ReactDebugOverlayTags.RN_CORE, "RNCore: load from Proxy");
       mDevLoadingViewController.showForRemoteJSEnabled();
       mDevLoadingViewVisible = true;
       reloadJSInProxyMode();
     } else {
+      //否则，从packager server加载JS
       PrinterHolder.getPrinter()
           .logMessage(ReactDebugOverlayTags.RN_CORE, "RNCore: load from Server");
       String bundleURL =
@@ -1015,14 +1017,17 @@ public class DevSupportManagerImpl
     };
   }
 
+  //从Debug Server加载JS
   public void reloadJSFromServer(final String bundleURL) {
     ReactMarker.logMarker(ReactMarkerConstants.DOWNLOAD_START);
 
+    //顶部小红条显示Loading from ... ...
     mDevLoadingViewController.showForUrl(bundleURL);
     mDevLoadingViewVisible = true;
 
     final BundleDownloader.BundleInfo bundleInfo = new BundleDownloader.BundleInfo();
 
+    //使用指定URL从Packager Server中加载Bunlde环境
     mDevServerHelper.downloadBundleFromURL(
         new DevBundleDownloadListener() {
           @Override

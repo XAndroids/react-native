@@ -25,7 +25,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Locale;
 
-/** Controller to display loading messages on top of the screen. All methods are thread safe. */
+/** 控制在屏幕顶部显示加载消息，所有方法都是线程安全的。*/
 public class DevLoadingViewController {
   private static boolean sEnabled = true;
   private final ReactInstanceManagerDevHelper mReactInstanceManagerHelper;
@@ -127,6 +127,7 @@ public class DevLoadingViewController {
   }
 
   private void showInternal(String message) {
+    //在屏幕顶部，显示红色区域提示信息，如Loading...等
     if (mDevLoadingPopup != null && mDevLoadingPopup.isShowing()) {
       // already showing
       return;

@@ -11,6 +11,9 @@ import com.facebook.react.bridge.JavaScriptExecutor;
 import com.facebook.react.bridge.JavaScriptExecutorFactory;
 import com.facebook.react.bridge.WritableNativeMap;
 
+/**
+ * JSC执行器工厂
+ */
 public class JSCExecutorFactory implements JavaScriptExecutorFactory {
   private final String mAppName;
   private final String mDeviceName;

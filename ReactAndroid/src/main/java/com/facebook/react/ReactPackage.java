@@ -14,20 +14,13 @@ import com.facebook.react.uimanager.ViewManager;
 import java.util.List;
 
 /**
- * Main interface for providing additional capabilities to the catalyst framework by couple of
- * different means:
- *
+ * 通过两种不同的方式，用于向catalyst fraework提供额外能力的主要接口：
  * <ol>
- *   <li>Registering new native modules
- *   <li>Registering new JS modules that may be accessed from native modules or from other parts of
- *       the native code (requiring JS modules from the package doesn't mean it will automatically
- *       be included as a part of the JS bundle, so there should be a corresponding piece of code on
- *       JS side that will require implementation of that JS module so that it gets bundled)
- *   <li>Registering custom native views (view managers) and custom event types
- *   <li>Registering natively packaged assets/resources (e.g. images) exposed to JS
- * </ol>
- *
- * <p>TODO(6788500, 6788507): Implement support for adding custom views, events and resources
+ *  <li>注册新的native modules
+ *  <li>注册可以从native module或native code的其它部分访问新JS模块（从保重require JS module并不意味着它会自
+ *      动包括为JS bundle的一部分，因此在JS端应该有一段相应的代码，需要实现那个JS模块，这样它才能被绑定）
+ *  <li>注册自定义native view（view manager）和自定义事件类型
+ *  <li>注册暴露给JS的native打包的seets/resources（如：images）
  */
 public interface ReactPackage {
 

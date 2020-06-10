@@ -105,21 +105,18 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * This class is managing instances of {@link CatalystInstance}. It exposes a way to configure
- * catalyst instance using {@link ReactPackage} and keeps track of the lifecycle of that instance.
- * It also sets up connection between the instance and developers support functionality of the
- * framework.
+ * 这个类管理{@link CatalystInstance}的实例。它公开使用{@link ReactPackage}配置catalyst实例的方法，并跟踪这
+ * 个实例的生命周期。它还建立了实例和支持框架功能的开发人员之间建立连接。
  *
- * <p>An instance of this manager is required to start JS application in {@link ReactRootView} (see
- * {@link ReactRootView#startReactApplication} for more info).
+ * <p>这个管理器的实例需要在{@link ReactRootView}中启动JS应用程序(see{@link ReactRootView#startReactApplication}
+ * for more info)。
  *
- * <p>The lifecycle of the instance of {@link ReactInstanceManager} should be bound to the activity
- * that owns the {@link ReactRootView} that is used to render react application using this instance
- * manager (see {@link ReactRootView#startReactApplication}). It's required to pass owning
- * activity's lifecycle events to the instance manager (see {@link #onHostPause}, {@link
- * #onHostDestroy} and {@link #onHostResume}).
+ * <p> {@link ReactInstanceManager}的实例生命周期应该绑定到拥有{@link ReactRootView}的Actiity，该Activity
+ * 使用manager实例 (see {@link ReactRootView#startReactApplication})渲染react应用程序。这需要将拥有的Acti
+ * 的生命周期事件(see {@link #onHostPause}, {@link#onHostDestroy} and {@link #onHostResume})发送到intance
+ * manager。
  *
- * <p>To instantiate an instance of this class use {@link #builder}.
+ * <p>使用{@link #builder}初始化这个类的实例。
  */
 @ThreadSafe
 public class ReactInstanceManager {
@@ -328,11 +325,9 @@ public class ReactInstanceManager {
   }
 
   /**
-   * Trigger react context initialization asynchronously in a background async task. This enables
-   * applications to pre-load the application JS, and execute global code before {@link
-   * ReactRootView} is available and measured.
-   *
-   * <p>Called from UI thread.
+   * 触发react context在后台异步任务中初始化。这是的应用程序能够在{@link ReactRootView}可用和测量之前预加载JS
+   * 并执行全局代码
+   * <p>在UI线程中调用
    */
   @ThreadConfined(UI)
   public void createReactContextInBackground() {
@@ -368,6 +363,7 @@ public class ReactInstanceManager {
         .logMessage(ReactDebugOverlayTags.RN_CORE, "RNCore: recreateReactContextInBackground");
     UiThreadUtil.assertOnUiThread();
 
+    //如果是开发模式，并且设置了JSMainModulePath
     if (mUseDeveloperSupport && mJSMainModulePath != null) {
       final DeveloperSettings devSettings = mDevSupportManager.getDevSettings();
 
@@ -375,6 +371,7 @@ public class ReactInstanceManager {
         if (mBundleLoader == null) {
           mDevSupportManager.handleReloadJS();
         } else {
+          //Packager Server是否正在运行
           mDevSupportManager.isPackagerRunning(
               new PackagerStatusCallback() {
                 @Override
@@ -384,11 +381,11 @@ public class ReactInstanceManager {
                         @Override
                         public void run() {
                           if (packagerIsRunning) {
+                            //如果正在打包，则reloadJS
                             mDevSupportManager.handleReloadJS();
                           } else if (mDevSupportManager.hasUpToDateJSBundleInCache()
                               && !devSettings.isRemoteJSDebugEnabled()) {
-                            // If there is a up-to-date bundle downloaded from server,
-                            // with remote JS debugging disabled, always use that.
+                            //如果从server下载了一个最新的bundle，并禁止了远程JS调试，轻始终使用它
                             onJSBundleLoadedFromServer(null);
                           } else {
                             // If dev server is down, disable the remote JS debugging.
@@ -947,6 +944,7 @@ public class ReactInstanceManager {
                 try {
                   Process.setThreadPriority(Process.THREAD_PRIORITY_DISPLAY);
                   ReactMarker.logMarker(VM_INIT);
+                  //创建上下问的之后，通过JSExecutorFactor引入不同的JS引擎
                   final ReactApplicationContext reactApplicationContext =
                       createReactContext(
                           initParams.getJsExecutorFactory().create(),
@@ -1118,7 +1116,7 @@ public class ReactInstanceManager {
     mMemoryPressureRouter.removeMemoryPressureListener(reactContext.getCatalystInstance());
   }
 
-  /** @return instance of {@link ReactContext} configured a {@link CatalystInstance} set */
+  /** @return {@link ReactContext} 实例配置{@link CatalystInstance} set。*/
   private ReactApplicationContext createReactContext(
       JavaScriptExecutor jsExecutor, JSBundleLoader jsBundleLoader) {
     Log.d(ReactConstants.TAG, "ReactInstanceManager.createReactContext()");
@@ -1172,6 +1170,7 @@ public class ReactInstanceManager {
     }
     ReactMarker.logMarker(ReactMarkerConstants.PRE_RUN_JS_BUNDLE_START);
     Systrace.beginSection(TRACE_TAG_REACT_JAVA_BRIDGE, "runJSBundle");
+    //将下载缓存的JS加载运行
     catalystInstance.runJSBundle();
     Systrace.endSection(TRACE_TAG_REACT_JAVA_BRIDGE);
 

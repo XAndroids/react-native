@@ -18,12 +18,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Class responsible to load and cache Typeface objects. It will first try to load typefaces inside
- * the assets/fonts folder and if it doesn't find the right Typeface in that folder will fall back
- * on the best matching system Typeface The supported custom fonts extensions are .ttf and .otf. For
- * each font family the bold, italic and bold_italic variants are supported. Given a "family" font
- * family the files in the assets/fonts folder need to be family.ttf(.otf) family_bold.ttf(.otf)
- * family_italic.ttf(.otf) and family_bold_italic.ttf(.otf)
+ * 这个类负责加载和缓存Typeface对象。它首先会尝试从assets/fonts文件夹中加载字体，如果它在这个文件夹中找不到合适的
+ * Typeface，就会选择最匹配的系统字体。支持的自定义字体扩展名是.ttf和.otf。对于每个字体族，都支持bold，italic和
+ * bold_italic。给定一个"family"字体族，在assts/fonts文件夹下需要family.ttf(.otf) family_bold.ttf(.otf)
+ * family_italic.ttf(otf)和family_bold_italic.ttf(.otf)
  */
 public class ReactFontManager {
 
@@ -31,6 +29,7 @@ public class ReactFontManager {
   private static final String[] FILE_EXTENSIONS = {".ttf", ".otf"};
   private static final String FONTS_ASSET_PATH = "fonts/";
 
+  //单例
   private static ReactFontManager sReactFontManagerInstance;
 
   private final Map<String, FontFamily> mFontCache;
@@ -80,10 +79,10 @@ public class ReactFontManager {
     return typeface;
   }
 
-  /*
-   * This method allows you to load custom fonts from res/font folder as provided font family name.
-   * Fonts may be one of .ttf, .otf or XML (https://developer.android.com/guide/topics/ui/look-and-feel/fonts-in-xml).
-   * To support multiple font styles or weights, you must provide a font in XML format.
+  /**
+   * 这个方法允许你从res/font文件夹使用提供的font family名称加载自定义字体。字体可能是一个.ttf，.otf或者XML
+   * (https://developer.android.com/guide/topics/ui/look-and-feel/fonts-in-xml)。为了支持多个字体样式
+   * 或者字重，你必须以XML格式提供字体。
    *
    * ReactFontManager.getInstance().addCustomFont(this, "Srisakdi", R.font.srisakdi);
    */

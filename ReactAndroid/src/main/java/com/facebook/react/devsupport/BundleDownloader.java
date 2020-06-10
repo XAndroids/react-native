@@ -33,12 +33,16 @@ import okio.Sink;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Bundler下载器
+ */
 public class BundleDownloader {
   private static final String TAG = "BundleDownloader";
 
   // Should be kept in sync with constants in RCTJavaScriptLoader.h
   private static final int FILES_CHANGED_COUNT_NOT_BUILT_BY_BUNDLER = -2;
 
+  //使用OkHttp下载Bundle
   private final OkHttpClient mClient;
 
   private BundleDeltaClient mBundleDeltaClient;
@@ -102,6 +106,7 @@ public class BundleDownloader {
     mClient = client;
   }
 
+  //从指定的URL现在Bundle
   public void downloadBundleFromURL(
       final DevBundleDownloadListener callback,
       final File outputFile,
@@ -112,6 +117,7 @@ public class BundleDownloader {
         callback, outputFile, bundleURL, bundleInfo, clientType, new Request.Builder());
   }
 
+  //从指定的URL下载Bundler
   public void downloadBundleFromURL(
       final DevBundleDownloadListener callback,
       final File outputFile,
@@ -119,7 +125,7 @@ public class BundleDownloader {
       final @Nullable BundleInfo bundleInfo,
       final BundleDeltaClient.ClientType clientType,
       Request.Builder requestBuilder) {
-
+    //使用OkHttp请求指定URL的Bundle文件
     final Request request =
         requestBuilder
             .url(formatBundleUrl(bundleURL, clientType))
@@ -134,7 +140,7 @@ public class BundleDownloader {
         new Callback() {
           @Override
           public void onFailure(Call call, IOException e) {
-            // ignore callback if call was cancelled
+            //如果我们已经取消忽略callback
             if (mDownloadBundleFromURLCall == null || mDownloadBundleFromURLCall.isCanceled()) {
               mDownloadBundleFromURLCall = null;
               return;
@@ -150,7 +156,7 @@ public class BundleDownloader {
 
           @Override
           public void onResponse(Call call, final Response response) throws IOException {
-            // ignore callback if call was cancelled
+            //如果我们已经取消忽略callback
             if (mDownloadBundleFromURLCall == null || mDownloadBundleFromURLCall.isCanceled()) {
               mDownloadBundleFromURLCall = null;
               return;
@@ -159,7 +165,7 @@ public class BundleDownloader {
 
             final String url = response.request().url().toString();
 
-            // Make sure the result is a multipart response and parse the boundary.
+            // 确保结果是multipart reponse，并解析边界
             String contentType = response.header("content-type");
             Pattern regex = Pattern.compile("multipart/mixed;.*boundary=\"([^\"]+)\"");
             Matcher match = regex.matcher(contentType);
@@ -168,8 +174,7 @@ public class BundleDownloader {
                 processMultipartResponse(
                     url, r, match.group(1), outputFile, bundleInfo, clientType, callback);
               } else {
-                // In case the server doesn't support multipart/mixed responses, fallback to normal
-                // download.
+                // 如果服务器不支持multipart/mixed响应，则返回正常下载。
                 processBundleResult(
                     url,
                     r.code(),
@@ -279,6 +284,7 @@ public class BundleDownloader {
     }
   }
 
+  //处理请求Package Server请求的结果
   private void processBundleResult(
       String url,
       int statusCode,
@@ -289,7 +295,7 @@ public class BundleDownloader {
       BundleDeltaClient.ClientType clientType,
       DevBundleDownloadListener callback)
       throws IOException {
-    // Check for server errors. If the server error has the expected form, fail with more info.
+    // 检查服务器错误。如果服务器错误有预期的形式，获取更多错误信息。
     if (statusCode != 200) {
       String bodyString = body.readUtf8();
       DebugServerException debugServerException = DebugServerException.parse(url, bodyString);
@@ -332,7 +338,7 @@ public class BundleDownloader {
     }
 
     if (bundleWritten) {
-      // If we have received a new bundle from the server, move it to its final destination.
+      // 如果我们从服务器接收到一个新的bundle，将其移动到最终目的地。
       if (!tmpFile.renameTo(outputFile)) {
         throw new IOException("Couldn't rename " + tmpFile + " to " + outputFile);
       }

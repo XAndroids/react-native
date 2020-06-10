@@ -9,47 +9,32 @@ package com.facebook.react.bridge;
 import android.content.Context;
 import android.content.res.AssetManager;
 
-/** An interface for classes that initialize JavaScript using {@link JSBundleLoader} */
+/** 用于使用{@link JSBundleLoader}初始化JavaScript的类的接口*/
 public interface JSBundleLoaderDelegate {
 
   /**
-   * Load a JS bundle from Android assets. See {@link JSBundleLoader#createAssetLoader(Context,
-   * String, boolean)}
-   *
-   * @param assetManager
-   * @param assetURL
-   * @param loadSynchronously
+   * 从Android asset中加载一个JS Bundle。 See {@link JSBundleLoader#createAssetLoader(Context,String, boolean)}
    */
   void loadScriptFromAssets(AssetManager assetManager, String assetURL, boolean loadSynchronously);
 
   /**
-   * Load a JS bundle from the filesystem. See {@link JSBundleLoader#createFileLoader(String)} and
-   * {@link JSBundleLoader#createCachedBundleFromNetworkLoader(String, String)}
-   *
-   * @param fileName
-   * @param sourceURL
-   * @param loadSynchronously
+   * 从文件系统加载JS Bundle。 See {@link JSBundleLoader#createFileLoader(String)} and {@link JSBundleLoader
+   * #createCachedBundleFromNetworkLoader(String, String)}
    */
   void loadScriptFromFile(String fileName, String sourceURL, boolean loadSynchronously);
 
   /**
-   * Load a delta bundle from Metro. See {@link JSBundleLoader#createDeltaFromNetworkLoader(String,
-   * NativeDeltaClient)}
-   *
-   * @param sourceURL
-   * @param deltaClient
-   * @param loadSynchronously
+   * 从Metro加载delta bundle。See {@link JSBundleLoader#createDeltaFromNetworkLoader(String, NativeDeltaClient)}
    */
   void loadScriptFromDeltaBundle(
       String sourceURL, NativeDeltaClient deltaClient, boolean loadSynchronously);
 
   /**
-   * This API is used in situations where the JS bundle is being executed not on the device, but on
-   * a host machine. In that case, we must provide two source URLs for the JS bundle: One to be used
-   * on the device, and one to be used on the remote debugging machine.
+   * 这个API用于JS bundle不是在设备上执行，而是在主机上执行的情况。在这种情况下，我们必须为JS包提供两个源url：一个
+   * 用于设备，另一个用于远程调试机器。
    *
-   * @param deviceURL A source URL that is accessible from this device.
-   * @param remoteURL A source URL that is accessible from the remote machine executing the JS.
+   * @param deviceURL 可从此设备访问源URL
+   * @param remoteURL 可从执行JS的远程机器访问的源URL
    */
   void setSourceURLs(String deviceURL, String remoteURL);
 }
