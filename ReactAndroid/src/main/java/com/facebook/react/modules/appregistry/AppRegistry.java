@@ -9,7 +9,7 @@ package com.facebook.react.modules.appregistry;
 import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.bridge.WritableMap;
 
-/** JS module interface - main entry point for launching React application for a given key. */
+/** JS module接口 - 给定一个key启动React应用程序的主要入口点。*/
 public interface AppRegistry extends JavaScriptModule {
 
   void runApplication(String appKey, WritableMap appParameters);

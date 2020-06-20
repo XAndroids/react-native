@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import com.facebook.react.uimanager.common.UIManagerType;
 
-/** Interface for the root native view of a React native application */
+/** 用于React Native程序的根native view的接口*/
 public interface ReactRoot {
 
   /** Return cached launch properties for app */
@@ -31,7 +31,7 @@ public interface ReactRoot {
 
   void setRootViewTag(int rootViewTag);
 
-  /** Calls into JS to start the React application. */
+  /** 调用JS来启动React应用程序。*/
   void runApplication();
 
   /** Handler for stages {@link com.facebook.react.surface.ReactStage} */

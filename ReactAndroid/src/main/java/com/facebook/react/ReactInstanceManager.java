@@ -722,12 +722,10 @@ public class ReactInstanceManager {
   }
 
   /**
-   * Attach given {@param reactRoot} to a catalyst instance manager and start JS application using
-   * JS module provided by {@link ReactRootView#getJSModuleName}. If the react context is currently
-   * being (re)-created, or if react context has not been created yet, the JS application associated
-   * with the provided reactRoot reactRoot will be started asynchronously, i.e this method won't
-   * block. This reactRoot will then be tracked by this manager and in case of catalyst instance
-   * restart it will be re-attached.
+   * 将给定的{@param reactRoot}附加到一个catalyst实例管理器上，使用由{@link ReactRootView#getJSModuleName}
+   * 提供的JS模块启动启动JS应用程序。如果react context当前正在（重新）创建，或者如果还没有创建react context，
+   * 那么与提供reactRoot关联的JS应用程序将异步启动。这个方法不会阻塞。然后这个管理器将跟踪这个reactRoot，在catal
+   * yst实例重新启动的情况下，它将会被重新连接。
    */
   @ThreadConfined(UI)
   public void attachRootView(ReactRoot reactRoot) {

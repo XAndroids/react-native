@@ -392,8 +392,9 @@ public class ReactRootView extends FrameLayout implements RootView, ReactRoot {
         // TODO initialize surface here
       }
 
+      //获取和加载JS入口
       mReactInstanceManager.createReactContextInBackground();
-
+      //启动React应用入口
       attachToReactInstanceManager();
 
     } finally {
@@ -496,8 +497,7 @@ public class ReactRootView extends FrameLayout implements RootView, ReactRoot {
   }
 
   /**
-   * Calls into JS to start the React application. Can be called multiple times with the same
-   * rootTag, which will re-render the application from the root.
+   * 调用JS来启动React应用。可以私用相同的rootTag调用多次，这将从根重新呈现应用程序。
    */
   @Override
   public void runApplication() {
@@ -531,6 +531,7 @@ public class ReactRootView extends FrameLayout implements RootView, ReactRoot {
 
         mShouldLogContentAppeared = true;
 
+        //调用JavaScript中AppRegistry.js的runApplication方法启动应用
         catalystInstance.getJSModule(AppRegistry.class).runApplication(jsAppModuleName, appParams);
       }
     } finally {

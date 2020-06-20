@@ -99,7 +99,7 @@ const AppRegistry = {
   },
 
   /**
-   * Registers an app's root component.
+   * 注册一个应用的root component
    *
    * See http://facebook.github.io/react-native/docs/appregistry.html#registercomponent
    */
@@ -173,7 +173,8 @@ const AppRegistry = {
   },
 
   /**
-   * Loads the JavaScript bundle and runs the app.
+   * 加载JavaScript bundle和运行应用
+   * 由Native catalystInstance调用
    *
    * See http://facebook.github.io/react-native/docs/appregistry.html#runapplication
    */
