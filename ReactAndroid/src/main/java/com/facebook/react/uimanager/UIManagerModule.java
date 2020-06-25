@@ -52,33 +52,23 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Native module to allow JS to create and update native Views.
- *
+ * Native模块，允许JS创建和更新native View。
  * <p>
  *
- * <h2>== Transactional Requirement ==</h2>
+ * <h2>== 事务要求 ==</h2>
+ * 该类的一个需求是确保事务性UI更新同时发生，这意味着中间状态不会呈现在屏幕上。例如，如果一个JS应用程序更新View A的
+ * 背景为蓝色，View B的宽度为100，都需要同时出现。实际上，这意味着与单个事务相关的所有UI更新代码都必须作为单个代码
+ * 块在UI线程上执行。作为多个代码块执行可以允许平台UI系统终端并呈现部分UI状态。
  *
- * A requirement of this class is to make sure that transactional UI updates occur all at once,
- * meaning that no intermediate state is ever rendered to the screen. For example, if a JS
- * application update changes the background of View A to blue and the width of View B to 100, both
- * need to appear at once. Practically, this means that all UI update code related to a single
- * transaction must be executed as a single code block on the UI thread. Executing as multiple code
- * blocks could allow the platform UI system to interrupt and render a partial UI state.
- *
- * <p>To facilitate this, this module enqueues operations that are then applied to native view
- * hierarchy through {@link NativeViewHierarchyManager} at the end of each transaction.
- *
+ * <p>为了方便这一点，这个模块对操作进行排队，然后在事务结束的时候通过{@link NativeViewHierarchyManager}应用到
+ * 本地视图层次结构。这些CSSNodeDEPRECATED能够根据其样式规则计算布局，然后该布局的结果x/y/宽度/高度被调度为一个操
+ * 作，该操作将在当前批处理结束时应用于native view层次结构。
  * <p>
  *
  * <h2>== CSSNodes ==</h2>
- *
- * In order to allow layout and measurement to occur on a non-UI thread, this module also operates
- * on intermediate CSSNodeDEPRECATED objects that correspond to a native view. These
- * CSSNodeDEPRECATED are able to calculate layout according to their styling rules, and then the
- * resulting x/y/width/height of that layout is scheduled as an operation that will be applied to
- * native view hierarchy at the end of current batch. TODO(5241856): Investigate memory usage of
- * creating many small objects in UIManageModule and consider implementing a pool TODO(5483063):
- * Don't dispatch the view hierarchy at the end of a batch if no UI changes occurred
+ * 为了允许在非UI线程上进行布局和测量，此模块还对native view对应的中间CSSNodeDEPRECATED对象进行操作。TODO(5241
+ * 856):调查在UIManageModule中创建许多小对象时的内存使用情况，并考虑实现一个池TODO(5483063):如果没有发生UI更改，
+ * 不要在批处理结束时分发视图层次结构
  */
 @ReactModule(name = UIManagerModule.NAME)
 public class UIManagerModule extends ReactContextBaseJavaModule
@@ -399,13 +389,9 @@ public class UIManagerModule extends ReactContextBaseJavaModule
   }
 
   /**
-   * Registers a new root view. JS can use the returned tag with manageChildren to add/remove
-   * children to this view.
+   * 注册一个新的根视图。JS可以使用manageChildren返回的标签来添加/删除子视图。
    *
-   * <p>Note that this must be called after getWidth()/getHeight() actually return something. See
-   * CatalystApplicationFragment as an example.
-   *
-   * <p>TODO(6242243): Make addRootView thread safe NB: this method is horribly not-thread-safe.
+   * <p>注意，这个必须在getWidth()/getHeight()实际返回一些东西之后调用。参见CatalystApplicationFragment作为一个例子。
    */
   @Override
   public <T extends View> int addRootView(
@@ -421,7 +407,7 @@ public class UIManagerModule extends ReactContextBaseJavaModule
     return tag;
   }
 
-  /** Unregisters a new root view. */
+  /** 注销一个新的根视图。*/
   @ReactMethod
   public void removeRootView(int rootViewTag) {
     mUIImplementation.removeRootView(rootViewTag);
@@ -454,8 +440,10 @@ public class UIManagerModule extends ReactContextBaseJavaModule
         });
   }
 
+  //创建视图
   @ReactMethod
   public void createView(int tag, String className, int rootViewTag, ReadableMap props) {
+    //JS代码中写的控件最终都是通过这个入口createView，创建Android能够识别的View
     if (DEBUG) {
       String message =
           "(UIManager.createView) tag: " + tag + ", class: " + className + ", props: " + props;
@@ -465,6 +453,7 @@ public class UIManagerModule extends ReactContextBaseJavaModule
     mUIImplementation.createView(tag, className, rootViewTag, props);
   }
 
+  //更新视图
   @ReactMethod
   public void updateView(int tag, String className, ReadableMap props) {
     if (DEBUG) {
@@ -484,15 +473,13 @@ public class UIManagerModule extends ReactContextBaseJavaModule
   }
 
   /**
-   * Interface for adding/removing/moving views within a parent view from JS.
-   *
-   * @param viewTag the view tag of the parent view
-   * @param moveFrom a list of indices in the parent view to move views from
-   * @param moveTo parallel to moveFrom, a list of indices in the parent view to move views to
-   * @param addChildTags a list of tags of views to add to the parent
-   * @param addAtIndices parallel to addChildTags, a list of indices to insert those children at
-   * @param removeFrom a list of indices of views to permanently remove. The memory for the
-   *     corresponding views and data structures should be reclaimed.
+   * 在JS父视图中添加/移除/移动视图的接口。
+   * @param viewTag 父视图的视图标记
+   * @param moveFrom 父视图中要从中移动视图的索引列表
+   * @param moveTo 与moveFrom平行，父视图中要移动视图的索引列表
+   * @param addChildTags 要添加到父视图的视图标记列表
+   * @param addAtIndices 与addChildTags并行，是插入子标记的索引列表
+   * @param removeFrom 要永久删除的视图索引列表。对应视图和数据结构的内存应该被回收。
    */
   @ReactMethod
   public void manageChildren(
@@ -524,11 +511,9 @@ public class UIManagerModule extends ReactContextBaseJavaModule
   }
 
   /**
-   * Interface for fast tracking the initial adding of views. Children view tags are assumed to be
-   * in order
-   *
-   * @param viewTag the view tag of the parent view
-   * @param childrenTags An array of tags to add to the parent in order
+   * 快速跟踪初始添加视图的界面。假设子视图标签是有序的
+   * @param viewTag 父视图的view标签
+   * @param childrenTags 要按顺序添加到父标签的数组
    */
   @ReactMethod
   public void setChildren(int viewTag, ReadableArray childrenTags) {
@@ -754,15 +739,12 @@ public class UIManagerModule extends ReactContextBaseJavaModule
   }
 
   /**
-   * To implement the transactional requirement mentioned in the class javadoc, we only commit UI
-   * changes to the actual view hierarchy once a batch of JS->Java calls have been completed. We
-   * know this is safe because all JS->Java calls that are triggered by a Java->JS call (e.g. the
-   * delivery of a touch event or execution of 'renderApplication') end up in a single JS->Java
-   * transaction.
+   * 为了实现类javadoc中提到的事务要求，我们只在完成了一批JS->Java调用之后，才将UI更改提交给实际的视图层次结构。
+   * 我们知道这是安全的，因为所有的JS->Java的调用都是由Java->JS触发的（例如，一个触摸时间的传递或'renderApplication'
+   * 的执行）都以一个JS->Java事务结束。
    *
-   * <p>A better way to do this would be to have JS explicitly signal to this module when a UI
-   * transaction is done. Right now, though, this is how iOS does it, and we should probably update
-   * the JS and native code and make this change at the same time.
+   * <p>更好的方法是当UI事务完成时，让JS显式的向这个模块发送信号。但现在，iOSJ就是这么做的，我们应该同时更新JS和本地
+   * 代码并做这个改变。
    *
    * <p>TODO(5279396): Make JS UI library explicitly notify the native UI module of the end of a UI
    * transaction using a standard native call

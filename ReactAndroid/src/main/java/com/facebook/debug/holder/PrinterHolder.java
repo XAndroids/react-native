@@ -5,7 +5,7 @@
 
 package com.facebook.debug.holder;
 
-/** Holder for debugging tool instance. */
+/** 用于调试工具实例的支架。*/
 public class PrinterHolder {
 
   private static Printer sPrinter = NoopPrinter.INSTANCE;

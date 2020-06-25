@@ -6,7 +6,7 @@
  */
 package com.facebook.react.bridge;
 
-/** Interface for a module that will be notified when a batch of JS->Java calls has finished. */
+/** 当一批JS-Java调用结束的时候，警备通知的一个module接口。 */
 public interface OnBatchCompleteListener {
 
   void onBatchComplete();

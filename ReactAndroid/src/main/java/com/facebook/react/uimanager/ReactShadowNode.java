@@ -21,22 +21,18 @@ import com.facebook.yoga.YogaValue;
 import com.facebook.yoga.YogaWrap;
 
 /**
- * Base node class for representing virtual tree of React nodes. Shadow nodes are used primarily for
- * layouting therefore it extends {@link YogaNode} to allow that. They also help with handling
- * Common base subclass of {@link YogaNode} for all layout nodes for react-based view. It extends
- * {@link YogaNode} by adding additional capabilities.
+ * 表示React节点虚拟树的基本节点类。Shadow节点主要用于布局，因此它继承了{@link YogaNode}来允许这样做。它们还帮助
+ * 处理react-based的view的所有布局节点{@link YogaNode}的公共基子类。它通过继承{@link YogaNode}添加额外的功能。
  *
- * <p>Instances of this class receive property updates from JS via @{link UIManagerModule}.
- * Subclasses may use {@link #updateShadowNode} to persist some of the updated fields in the node
- * instance that corresponds to a particular view type.
+ * <p>这个类的实例通过@{link UIManagerModule}从JS接收属性更新。子类可以使用{@link #updateShadowNode}来持久化
+ * 节点实例中与特定视图类型对应的一些已更新的字段。
  *
- * <p>Subclasses of {@link ReactShadowNode} should be created only from {@link ViewManager} that
- * corresponds to a certain type of native view. They will be updated and accessed only from JS
- * thread. Subclasses of {@link ViewManager} may choose to use base class {@link ReactShadowNode} or
- * custom subclass of it if necessary.
+ * <p>{@link ReactShadowNode}的子类应该只从对应于某种类型的native 视图的{@link ViewManager}创建。他们只有从
+ * JS线程被更新和访问。如果需要的话，{@link ViewManager}的子类可以选择使用基类{@link ReactShadowNode}或者自定
+ * 义子类。
  *
- * <p>The primary use-case for {@link ReactShadowNode} nodes is to calculate layouting. Although
- * this might be extended. For some examples please refer to ARTGroupYogaNode or ReactTextYogaNode.
+ * {@link ReactShadowNode}节点的主要用例是计算布局。尽管这可能会被继承。一些例子请参考ARTGroupYogaNode或React
+ * TextYogaNode。
  *
  * <p>This class allows for the native view hierarchy to not be an exact copy of the hierarchy
  * received from JS by keeping track of both JS children (e.g. {@link #getChildCount()} and
@@ -103,9 +99,8 @@ public interface ReactShadowNode<T extends ReactShadowNode> {
   void removeAndDisposeAllChildren();
 
   /**
-   * This method will be called by {@link UIManagerModule} once per batch, before calculating
-   * layout. Will be only called for nodes that are marked as updated with {@link #markUpdated()} or
-   * require layouting (marked with {@link #dirty()}).
+   * 在计算布局之前，该方法将由{@link UIManagerModule}每批调用一次。将只对标记为更新的{@link #markUpdated()}
+   * 或需要layouting(标记为{@link #dirty()})的节点调用。
    */
   void onBeforeLayout(NativeViewHierarchyOptimizer nativeViewHierarchyOptimizer);
 

@@ -28,19 +28,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Base node class for representing virtual tree of React nodes. Shadow nodes are used primarily for
- * layouting therefore it extends {@link YogaNode} to allow that. They also help with handling
- * Common base subclass of {@link YogaNode} for all layout nodes for react-based view. It extends
- * {@link YogaNode} by adding additional capabilities.
+ * 表示React节点的虚拟树的基本节点类。Shadow节点主要用于布局，因此扩展了{@link YogaNode}来允许这样做。它们还帮助
+ * 处理{@link YogaNode}的公共子类，基于react视图的所有布局节点。它通过继承{@link YogaNode}添加额外的功能。
  *
- * <p>Instances of this class receive property updates from JS via @{link UIManagerModule}.
- * Subclasses may use {@link #updateShadowNode} to persist some of the updated fields in the node
- * instance that corresponds to a particular view type.
+ * <p这个类的实例通过@{link UIManagerModule}从JS接收属性更新。子类可以使用{@link #updateShadowNode}在节点中
+ * 持久化一些已更新的字段，对应于特定视图类型的实例。
  *
- * <p>Subclasses of {@link ReactShadowNodeImpl} should be created only from {@link ViewManager} that
- * corresponds to a certain type of native view. They will be updated and accessed only from JS
- * thread. Subclasses of {@link ViewManager} may choose to use base class {@link
- * ReactShadowNodeImpl} or custom subclass of it if necessary.
+ * <p> {@link ReactShadowNodeImpl}的子类应该只从对应于某种类型的native视图的{@link ViewManager}中创建。他们
+ * 只有从JS线程更新和访问。如果需要的话，{@link ViewManager}的子类可以选择使用基类{@link ReactShadowNodeImpl}
+ * 或者自定义子类。
  *
  * <p>The primary use-case for {@link ReactShadowNodeImpl} nodes is to calculate layouting. Although
  * this might be extended. For some examples please refer to ARTGroupYogaNode or ReactTextYogaNode.

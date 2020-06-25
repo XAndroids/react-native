@@ -12,8 +12,7 @@ import android.view.View;
 import com.facebook.react.common.SingleThreadAsserter;
 
 /**
- * Simple container class to keep track of {@link ReactShadowNode}s associated with a particular
- * UIManagerModule instance.
+ * 简单的容器类，用于跟踪与特定UIManagerModule实例关联的{@link ReactShadowNode}。
  */
 public class ShadowNodeRegistry {
 

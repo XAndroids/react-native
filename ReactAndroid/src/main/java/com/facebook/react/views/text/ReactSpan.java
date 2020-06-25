@@ -6,8 +6,8 @@
  */
 package com.facebook.react.views.text;
 
-/*
- * Enables us to distinguish between spans that were added by React Native and spans that were
- * added by something else. All spans that React Native adds should implement this interface.
+
+/**
+ * 使我们能够区分由React Native添加的span和由其他东西添加的span。所有响应本机添加的span都应该实现此接口。
  */
 public interface ReactSpan {}

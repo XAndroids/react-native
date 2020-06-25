@@ -36,10 +36,8 @@ import com.facebook.yoga.YogaNode;
 import java.util.ArrayList;
 
 /**
- * {@link ReactBaseTextShadowNode} concrete class for anchor {@code Text} node.
- *
- * <p>The class measures text in {@code <Text>} view and feeds native {@link TextView} using {@code
- * Spannable} object constructed in superclass.
+ * anchor {@code Text} 节点的 {@link ReactBaseTextShadowNode}具体类。
+ * <p>类在{@code < text >}View中测量文本，并使用在超类中构造的{@code Spannable}对象提供原生  {@link TextView}。
  */
 @TargetApi(Build.VERSION_CODES.M)
 public class ReactTextShadowNode extends ReactBaseTextShadowNode {

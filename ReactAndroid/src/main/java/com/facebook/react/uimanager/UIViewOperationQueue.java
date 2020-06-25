@@ -30,14 +30,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This class acts as a buffer for command executed on {@link NativeViewHierarchyManager}. It expose
- * similar methods as mentioned classes but instead of executing commands immediately it enqueues
- * those operations in a queue that is then flushed from {@link UIManagerModule} once JS batch of ui
- * operations is finished. This is to make sure that we execute all the JS operation coming from a
- * single batch a single loop of the main (UI) android looper.
+ * 这个类充当在{@link nativeviewherarchymanager}上执行的命令的缓冲区。它公开了与前面提到的类类似的方法，但不是
+ * 立即执行命令，而是将这些操作放入一个队列中，一旦JS批ui操作完成，该队列就会从{@link UIManagerModule}中清除。
+ * 这是为了确保我们执行的所有JS操作都来自于一个批处理，即主(UI) android循环器的一个循环。
  *
  * <p>TODO(7135923): Pooling of operation objects TODO(5694019): Consider a better data structure
- * for operations queue to save on allocations
+ *  * for operations queue to save on allocations
  */
 public class UIViewOperationQueue {
 
@@ -45,13 +43,13 @@ public class UIViewOperationQueue {
 
   private final int[] mMeasureBuffer = new int[4];
 
-  /** A mutation or animation operation on the view hierarchy. */
+  /** 视图层级上的变化或者动画操作。 */
   public interface UIOperation {
 
     void execute();
   }
 
-  /** A spec for an operation on the native View hierarchy. */
+  /** native视图层次的一个操作规范。*/
   private abstract class ViewOperation implements UIOperation {
 
     public int mTag;
@@ -130,9 +128,8 @@ public class UIViewOperationQueue {
   }
 
   /**
-   * Operation for updating native view's position and size. The operation is not created directly
-   * by a {@link UIManagerModule} call from JS. Instead it gets inflated using computed position and
-   * size values by CSSNodeDEPRECATED hierarchy.
+   * 用于更新native视图的位置和大小的操作。该操作不是通过JS中的{@link UIManagerModule}调用直接创建的。相反，它
+   * 通过CSSNodeDEPRECATED层次结构计算位置和大小值来膨胀。
    */
   private final class UpdateLayoutOperation extends ViewOperation {
 
@@ -155,6 +152,9 @@ public class UIViewOperationQueue {
     }
   }
 
+  /**
+   * 创建View操作
+   */
   private final class CreateViewOperation extends ViewOperation {
 
     private final ThemedReactContext mThemedContext;
@@ -766,8 +766,7 @@ public class UIViewOperationQueue {
               try {
                 long runStartTime = SystemClock.uptimeMillis();
 
-                // All nonBatchedOperations should be executed before regular operations as
-                // regular operations may depend on them
+                //所有非批处理操作应该在常规操作之前执行，因为常规操作可能依赖于它们
                 if (nonBatchedOperations != null) {
                   for (UIOperation op : nonBatchedOperations) {
                     op.execute();

@@ -157,8 +157,7 @@ public class UIImplementation {
   }
 
   /**
-   * Registers a root node with a given tag, size and ThemedReactContext and adds it to a node
-   * registry.
+   * 使用给定的tag、大小和ThemedReactContext注册根节点，并将其添加到节点注册表中。
    */
   public <T extends View> void registerRootView(T rootView, int tag, ThemedReactContext context) {
     synchronized (uiImplementationThreadLock) {
@@ -229,7 +228,7 @@ public class UIImplementation {
     return mOperationsQueue.getProfiledBatchPerfCounters();
   }
 
-  /** Invoked by React to create a new node with a given tag, class name and properties. */
+  /** React调用，以创建具有给定tag、类名和属性的新节点 */
   public void createView(int tag, String className, int rootViewTag, ReadableMap props) {
     synchronized (uiImplementationThreadLock) {
       ReactShadowNode cssNode = createShadowNode(className);
@@ -587,7 +586,7 @@ public class UIImplementation {
     }
   }
 
-  /** Invoked at the end of the transaction to commit any updates to the node hierarchy. */
+  /** 在事务结束时调用，以向节点层次结构提交任何更新。 */
   public void dispatchViewUpdates(int batchId) {
     SystraceMessage.beginSection(
             Systrace.TRACE_TAG_REACT_JAVA_BRIDGE, "UIImplementation.dispatchViewUpdates")

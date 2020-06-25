@@ -76,7 +76,7 @@ public class NativeViewHierarchyOptimizer {
     mShadowNodeRegistry = shadowNodeRegistry;
   }
 
-  /** Handles a createView call. May or may not actually create a native view. */
+  /** 处理一个createView调用。可能创建也可能不创建native view。 */
   public void handleCreateView(
       ReactShadowNode node,
       ThemedReactContext themedContext,

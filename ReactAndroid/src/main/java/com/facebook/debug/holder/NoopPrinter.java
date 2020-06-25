@@ -5,9 +5,11 @@
 
 package com.facebook.debug.holder;
 
+import android.util.Log;
+
 import com.facebook.debug.debugoverlay.model.DebugOverlayTag;
 
-/** No-op implementation of {@link Printer}. */
+/** of {@link Printer} Log实现。*/
 public class NoopPrinter implements Printer {
 
   public static final NoopPrinter INSTANCE = new NoopPrinter();
@@ -15,13 +17,19 @@ public class NoopPrinter implements Printer {
   private NoopPrinter() {}
 
   @Override
-  public void logMessage(DebugOverlayTag tag, String message, Object... args) {}
+  public void logMessage(DebugOverlayTag tag, String message, Object... args) {
+    //打印相关日志
+    Log.i("ReactNative1",message);
+  }
 
   @Override
-  public void logMessage(DebugOverlayTag tag, String message) {}
+  public void logMessage(DebugOverlayTag tag, String message) {
+    //打印相关日志
+    Log.i("ReactNative1",message);
+  }
 
   @Override
   public boolean shouldDisplayLogMessage(final DebugOverlayTag tag) {
-    return false;
+    return true;
   }
 }

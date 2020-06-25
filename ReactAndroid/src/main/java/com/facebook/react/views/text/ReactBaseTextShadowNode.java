@@ -34,14 +34,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * {@link ReactShadowNode} abstract class for spannable text nodes.
+ * 用于可扩展text节点的{@link ReactShadowNode} 抽象类。
  *
- * <p>This class handles all text attributes associated with {@code <Text>}-ish node. A concrete
- * node can be an anchor {@code <Text>} node, an anchor {@code <TextInput>} node or virtual {@code
- * <Text>} node inside {@code <Text>} or {@code <TextInput>} node. Or even something else.
+ * <p>这个类处理与{@code < text >}-ish节点相关的所有文本属性。具体节点可以是anchor{@code <Text>}节点、anchor
+ * {@code <TextInput>}节点或位于{@code <Text>}或{@code <TextInput>}内的虚拟{@code <Text>}节点。或者别的什么。
  *
- * <p>This also node calculates {@link Spannable} object based on subnodes of the same type, which
- * can be used in concrete classes to feed native views and compute layout.
+ * <p>此节点也基于相同类型的子节点计算{@link Spannable}对象，这些子节点可以在具体类中用于提供本机视图和计算布局。
  */
 @TargetApi(Build.VERSION_CODES.M)
 public abstract class ReactBaseTextShadowNode extends LayoutShadowNode {
@@ -350,11 +348,10 @@ public abstract class ReactBaseTextShadowNode extends LayoutShadowNode {
   protected int mFontStyle = UNSET;
 
   protected int mFontWeight = UNSET;
+
   /**
-   * NB: If a font family is used that does not have a style in a certain Android version (ie.
-   * monospace bold pre Android 5.0), that style (ie. bold) will not be inherited by nested Text
-   * nodes. To retain that style, you have to add it to those nodes explicitly.
-   *
+   * 注:如果在某个Android版本中使用了一个没有样式的fontFamily(例如。Android 5.0前的monospace粗体(monospace
+   * bold)。(粗体)将不会被嵌套文本节点继承。要保持这种样式，必须显式地将其添加到这些节点。
    * <p>Example, Android 4.4:
    *
    * <pre>

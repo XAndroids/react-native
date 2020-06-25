@@ -24,9 +24,8 @@ import com.facebook.yoga.YogaMeasureMode;
 import java.util.Map;
 
 /**
- * Class responsible for knowing how to create and update catalyst Views of a given type. It is also
- * responsible for creating and updating CSSNodeDEPRECATED subclasses used for calculating position
- * and size for the corresponding native view.
+ * 类负责了解如何创建和更新给定类型的catalyst视图。它还负责创建和更新用于计算相应native视图的位置和大小的CSSNode
+ * DEPRECATED子类。
  */
 @ReactPropertyHolder
 public abstract class ViewManager<T extends View, C extends ReactShadowNode>
@@ -88,15 +87,14 @@ public abstract class ViewManager<T extends View, C extends ReactShadowNode>
   }
 
   /**
-   * @return the name of this view manager. This will be the name used to reference this view
-   *     manager from JavaScript in createReactNativeComponentClass.
+   * @return 这个ViewManager的名称。这将是在createReactNativeComponentClass中用于从JavaScript易用该ViewMa
+   * nager的名称。
    */
   public abstract @NonNull String getName();
 
   /**
-   * This method should return a subclass of {@link ReactShadowNode} which will be then used for
-   * measuring position and size of the view. In most of the cases this should just return an
-   * instance of {@link ReactShadowNode}
+   * 这个方法返回一个 {@link ReactShadowNode}子类，用于测量view的位置和大小。在大多数情况下，这应该只返回一个
+   * {@link ReactShadowNode}实例
    */
   public C createShadowNodeInstance() {
     throw new RuntimeException("ViewManager subclasses must implement createShadowNodeInstance()");

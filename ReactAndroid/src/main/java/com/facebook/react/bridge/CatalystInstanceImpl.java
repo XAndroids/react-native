@@ -148,10 +148,10 @@ public class CatalystInstanceImpl implements CatalystInstance {
     mJavaScriptContextHolder = new JavaScriptContextHolder(getJavaScriptContext());
   }
 
+  //与JS通信的回调？？？
   private static class BridgeCallback implements ReactCallback {
-    // We do this so the callback doesn't keep the CatalystInstanceImpl alive.
-    // In this case, the callback is held in C++ code, so the GC can't see it
-    // and determine there's an inaccessible cycle.
+    // 这样做，回调就不会让CatalystInstanceImpl保持活动状态。
+    // 在这种情况下，回调被保存在c++代码中，所以GC不能看到它并确定有一个不可访问的循环。
     private final WeakReference<CatalystInstanceImpl> mOuter;
 
     BridgeCallback(CatalystInstanceImpl outer) {

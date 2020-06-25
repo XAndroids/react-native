@@ -38,20 +38,17 @@ import java.util.Arrays;
 import javax.annotation.concurrent.NotThreadSafe;
 
 /**
- * Delegate of {@link UIManagerModule} that owns the native view hierarchy and mapping between
- * native view names used in JS and corresponding instances of {@link ViewManager}. The {@link
- * UIManagerModule} communicates with this class by it's public interface methods:
- *
+ * {@link UIManagerModule}的委托，该委托拥有native视图层次结构，以及JS中使用的native视图名称与{@link ViewMan
+ * ager}对应实例之间的映射。{@link UIManagerModule}通过它的公共接口方法与这个类通信:
  * <ul>
  *   <li>{@link #updateProperties}
  *   <li>{@link #updateLayout}
  *   <li>{@link #createView}
  *   <li>{@link #manageChildren}
  * </ul>
+ * 在JS批处理结束时执行所有预定的UI操作。
  *
- * executing all the scheduled UI operations at the end of JS batch.
- *
- * <p>NB: All native view management methods listed above must be called from the UI thread.
+ * NB:必须从UI线程调用上面列出的所有本地视图管理方法。
  *
  * <p>The {@link ReactContext} instance that is passed to views that this manager creates differs
  * from the one that we pass as a constructor. Instead we wrap the provided instance of {@link
@@ -67,7 +64,9 @@ public class NativeViewHierarchyManager {
 
   private static final String TAG = NativeViewHierarchyManager.class.getSimpleName();
 
+  //缓存创建的Views，后期进行View的更新等操作
   private final SparseArray<View> mTagsToViews;
+  //缓存创建Views的ViewManager
   private final SparseArray<ViewManager> mTagsToViewManagers;
   private final SparseBooleanArray mRootTags;
   private final ViewManagerRegistry mViewManagers;
@@ -94,6 +93,7 @@ public class NativeViewHierarchyManager {
     mRootViewManager = manager;
   }
 
+  //通过tag查找对应View
   public final synchronized View resolveView(int tag) {
     View view = mTagsToViews.get(tag);
     if (view == null) {
@@ -103,6 +103,7 @@ public class NativeViewHierarchyManager {
     return view;
   }
 
+  //通过tag查找对应ViewManager
   public final synchronized ViewManager resolveViewManager(int tag) {
     ViewManager viewManager = mTagsToViewManagers.get(tag);
     if (viewManager == null) {
@@ -134,6 +135,7 @@ public class NativeViewHierarchyManager {
     }
   }
 
+  //更新指定tag View的属性
   public synchronized void updateProperties(int tag, ReactStylesDiffMap props) {
     UiThreadUtil.assertOnUiThread();
 
@@ -266,6 +268,7 @@ public class NativeViewHierarchyManager {
     try {
       ViewManager viewManager = mViewManagers.get(className);
 
+      //创建native View
       View view = viewManager.createView(themedContext, null, null, mJSResponderHandler);
       mTagsToViews.put(tag, view);
       mTagsToViewManagers.put(tag, viewManager);
