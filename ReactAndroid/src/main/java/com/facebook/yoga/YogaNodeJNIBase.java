@@ -94,6 +94,7 @@ public abstract class YogaNodeJNIBase extends YogaNode implements Cloneable {
     }
     mChildren.add(i, child);
     child.mOwner = this;
+    //调用YogaNative的jni_YGNodeInsertChild方法，添加视图
     YogaNative.jni_YGNodeInsertChild(mNativePointer, child.mNativePointer, i);
   }
 

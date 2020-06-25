@@ -416,11 +416,9 @@ public class UIImplementation {
   }
 
   /**
-   * An optimized version of manageChildren that is used for initial setting of child views. The
-   * children are assumed to be in index order
-   *
-   * @param viewTag tag of the parent
-   * @param childrenTags tags of the children
+   * 用于初始设置子视图的manageChildren的优化版本。假定子节点按索引顺序排列
+   * @param viewTag 父标签
+   * @param childrenTags 孩子标签
    */
   public void setChildren(int viewTag, ReadableArray childrenTags) {
     synchronized (uiImplementationThreadLock) {
@@ -432,6 +430,7 @@ public class UIImplementation {
           throw new IllegalViewOperationException(
               "Trying to add unknown view tag: " + childrenTags.getInt(i));
         }
+        //添加节点
         cssNodeToManage.addChildAt(cssNodeToAdd, i);
       }
 

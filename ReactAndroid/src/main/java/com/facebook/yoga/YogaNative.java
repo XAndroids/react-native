@@ -12,10 +12,11 @@ import com.facebook.soloader.SoLoader;
 @DoNotStrip
 public class YogaNative {
   static {
+    //加载yoga native so库
     SoLoader.loadLibrary("yoga");
   }
 
-  // YGConfig related
+  // YGConfig相关
   static native long jni_YGConfigNew();
   static native void jni_YGConfigFree(long nativePointer);
   static native void jni_YGConfigSetExperimentalFeatureEnabled(long nativePointer, int feature, boolean enabled);
@@ -26,8 +27,7 @@ public class YogaNative {
   static native void jni_YGConfigSetShouldDiffLayoutWithoutLegacyStretchBehaviour(long nativePointer, boolean shouldDiffLayoutWithoutLegacyStretchBehaviour);
   static native void jni_YGConfigSetLogger(long nativePointer, Object logger);
 
-
-  // YGNode related
+  // YGNode相关
   static native long jni_YGNodeNew();
   static native long jni_YGNodeNewWithConfig(long configPointer);
   static native void jni_YGNodeFree(long nativePointer);

@@ -23,6 +23,7 @@ public abstract class YogaNode {
 
   public abstract YogaNode getChildAt(int i);
 
+  //向视图结构添加View
   public abstract void addChildAt(YogaNode child, int i);
 
   public abstract void setIsReferenceBaseline(boolean isReferenceBaseline);
