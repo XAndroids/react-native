@@ -5,9 +5,9 @@
 
 package com.facebook.react.bridge;
 
-/** Listener interface for memory pressure events. */
+/** 用于内存压力事件的侦听器接口。*/
 public interface MemoryPressureListener {
 
-  /** Called when the system generates a memory warning. */
+  /** 当系统生成内存警告时调用。*/
   void handleMemoryPressure(int level);
 }

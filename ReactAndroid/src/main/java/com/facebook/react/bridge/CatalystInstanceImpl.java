@@ -97,6 +97,7 @@ public class CatalystInstanceImpl implements CatalystInstance {
   private volatile boolean mAcceptCalls = false;
 
   private boolean mJSBundleHasLoaded;
+  //加载运行的JS Bundle URL
   private @Nullable String mSourceURL;
 
   private JavaScriptContextHolder mJavaScriptContextHolder;
@@ -134,6 +135,7 @@ public class CatalystInstanceImpl implements CatalystInstance {
 
     Log.d(ReactConstants.TAG, "Initializing React Xplat Bridge before initializeBridge");
     Systrace.beginSection(TRACE_TAG_REACT_JAVA_BRIDGE, "initializeCxxBridge");
+
     //初始化Bridge，将jsExecutor传入，用于后期执行JS
     initializeBridge(
         new BridgeCallback(this),
@@ -142,13 +144,13 @@ public class CatalystInstanceImpl implements CatalystInstance {
         mNativeModulesQueueThread,
         mNativeModuleRegistry.getJavaModules(this),
         mNativeModuleRegistry.getCxxModules());
+
     Log.d(ReactConstants.TAG, "Initializing React Xplat Bridge after initializeBridge");
     Systrace.endSection(TRACE_TAG_REACT_JAVA_BRIDGE);
 
     mJavaScriptContextHolder = new JavaScriptContextHolder(getJavaScriptContext());
   }
 
-  //与JS通信的回调？？？
   private static class BridgeCallback implements ReactCallback {
     // 这样做，回调就不会让CatalystInstanceImpl保持活动状态。
     // 在这种情况下，回调被保存在c++代码中，所以GC不能看到它并确定有一个不可访问的循环。
@@ -427,7 +429,7 @@ public class CatalystInstanceImpl implements CatalystInstance {
     return mDestroyed;
   }
 
-  /** Initialize all the native modules */
+  /** 初始化所有的native modules */
   @VisibleForTesting
   @Override
   public void initialize() {
@@ -438,6 +440,7 @@ public class CatalystInstanceImpl implements CatalystInstance {
     // that changes, then we need to set mAcceptCalls just after posting the
     // task that will run the js bundle.
     Assertions.assertCondition(mAcceptCalls, "RunJSBundle hasn't completed.");
+
     mInitialized = true;
     mNativeModulesQueueThread.runOnQueue(
         new Runnable() {

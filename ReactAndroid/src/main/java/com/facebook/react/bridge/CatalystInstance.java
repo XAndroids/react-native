@@ -22,12 +22,11 @@ public interface CatalystInstance
     extends MemoryPressureListener, JSInstance, JSBundleLoaderDelegate {
   void runJSBundle();
 
-  // Returns the status of running the JS bundle; waits for an answer if runJSBundle is running
+  // 返回运行JS包的状态;如果runJSBundle正在运行，则等待答案
   boolean hasRunJSBundle();
 
   /**
-   * Return the source URL of the JS Bundle that was run, or {@code null} if no JS bundle has been
-   * run yet.
+   * 返回运行的JS包的源URL，如果没有运行JS包，返回{@code null}。
    */
   @Nullable
   String getSourceURL();
@@ -40,16 +39,16 @@ public interface CatalystInstance
 
   @DoNotStrip
   void callFunction(String module, String method, NativeArray arguments);
+
   /**
-   * Destroys this catalyst instance, waiting for any other threads in ReactQueueConfiguration
-   * (besides the UI thread) to finish running. Must be called from the UI thread so that we can
-   * fully shut down other threads.
+   * 销毁这个catalyst实例，等待ReactQueueConfiguration中的其他线程(UI线程之外)完成运行。必须从UI线程调用，以便
+   * 我们可以完全关闭其他线程。
    */
   void destroy();
 
   boolean isDestroyed();
 
-  /** Initialize all the native modules */
+  /** 初始化所有的native modules */
   @VisibleForTesting
   void initialize();
 

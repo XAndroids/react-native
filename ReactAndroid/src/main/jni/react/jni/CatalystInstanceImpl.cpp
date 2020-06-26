@@ -147,6 +147,7 @@ void CatalystInstanceImpl::initializeBridge(
   // don't need jsModuleDescriptions any more, all the way up and down the
   // stack.
 
+  // 将原生模块映射表传给ModuleRegistry.cpp
   moduleRegistry_ = std::make_shared<ModuleRegistry>(
     buildNativeModuleList(
        std::weak_ptr<Instance>(instance_),

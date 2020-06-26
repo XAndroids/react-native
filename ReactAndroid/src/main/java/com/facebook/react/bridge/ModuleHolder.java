@@ -209,6 +209,7 @@ public class ModuleHolder {
         .arg("name", mName)
         .flush();
     ReactMarker.logMarker(ReactMarkerConstants.INITIALIZE_MODULE_START, mName, mInstanceKey);
+
     try {
       boolean shouldInitialize = false;
       // Check to see if another thread is initializing the object, if not claim the responsibility

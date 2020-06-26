@@ -14,7 +14,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-/** A set of Java APIs to expose to a particular JavaScript instance. */
+/** 一组公开的Java api，给特定JavaScript实例的。*/
 public class NativeModuleRegistry {
 
   private final ReactApplicationContext mReactApplicationContext;
@@ -97,6 +97,7 @@ public class NativeModuleRegistry {
     ReactMarker.logMarker(ReactMarkerConstants.NATIVE_MODULE_INITIALIZE_START);
     Systrace.beginSection(
         Systrace.TRACE_TAG_REACT_JAVA_BRIDGE, "NativeModuleRegistry_notifyJSInstanceInitialized");
+
     try {
       for (ModuleHolder module : mModules.values()) {
         module.markInitializable();
@@ -108,11 +109,9 @@ public class NativeModuleRegistry {
   }
 
   public void onBatchComplete() {
-    // The only native module that uses the onBatchComplete is the UI Manager. Hence, instead of
-    // iterating over all the modules for find this one instance, and then calling it, we
-    // short-circuit
-    // the search, and simply call OnBatchComplete on the UI Manager.
-    // With Fabric, UIManager would no longer be a NativeModule, so this call would simply go away
+    // 唯一使用onBatchComplete的native module是UI Manager。因此，我们没有遍历所有模块来查找这个实例，然后调用
+    // 它，而是缩短了搜索，只在UI Manager上调用OnBatchComplete。有了Fabric, UIManager将不再是一个NativeModu
+    // le，所以这个调用将简单地消失
     ModuleHolder moduleHolder = mModules.get("UIManager");
     if (moduleHolder != null && moduleHolder.hasInstance()) {
       ((OnBatchCompleteListener) moduleHolder.getModule()).onBatchComplete();

@@ -72,7 +72,6 @@ public abstract class JSBundleLoader {
   /**
    * 这个loader用于从dev server加载增量包。我们将每个增量消息传递给加载器，并用C++处理它。将其作为字符串传递会由于
    * 内存副本而导致效率低下，这将在后续处理中得到解决。
-   * @param nativeDeltaClient
    */
   public static JSBundleLoader createDeltaFromNetworkLoader(
       final String sourceURL, final NativeDeltaClient nativeDeltaClient) {
@@ -90,8 +89,7 @@ public abstract class JSBundleLoader {
   }
 
   /**
-   * This loader is used when proxy debugging is enabled. In that case there is no point in fetching
-   * the bundle from device as remote executor will have to do it anyway.
+   * 这个加载器在启用代理调试时使用。在这种情况下，从设备获取bundle是没有意义的，因为远程执行器无论如何都要做这件事。
    */
   public static JSBundleLoader createRemoteDebuggerBundleLoader(
       final String proxySourceURL, final String realSourceURL) {
