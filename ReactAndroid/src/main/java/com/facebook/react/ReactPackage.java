@@ -31,7 +31,7 @@ public interface ReactPackage {
   @NonNull
   List<NativeModule> createNativeModules(@NonNull ReactApplicationContext reactContext);
 
-  /** @return a list of view managers that should be registered with {@link UIManagerModule} */
+  /** 返回应该向{@link UIManagerModule}注册的viewManager列表 */
   @NonNull
   List<ViewManager> createViewManagers(@NonNull ReactApplicationContext reactContext);
 }

@@ -18,9 +18,8 @@ import java.util.List;
 import javax.inject.Provider;
 
 /**
- * Package defining core framework modules (e.g. UIManager). It should be used for modules that
- * require special integration with other framework parts (e.g. with the list of packages to load
- * view managers from).
+ * Package定义核心框架模块(如UIManager)。它应该用于需要与其他框架部件进行特殊集成的模块(例如，用于加载视图管理器的
+ * 包列表)。
  */
 @ReactModuleList(
     nativeModules = {

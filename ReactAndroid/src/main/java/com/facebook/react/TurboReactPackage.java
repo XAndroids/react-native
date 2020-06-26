@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.Set;
 import javax.inject.Provider;
 
-/** This will eventually replace {@link LazyReactPackage} when TurboModules are finally done. */
+/** 这将最终取代{@link LazyReactPackage}，当叶轮最终完成时。*/
 public abstract class TurboReactPackage implements ReactPackage {
 
   @Override
@@ -32,12 +32,7 @@ public abstract class TurboReactPackage implements ReactPackage {
   }
 
   /**
-   * The API needed for TurboModules. Given a module name, it returns an instance of {@link
-   * NativeModule} for the name
-   *
-   * @param name
-   * @param reactContext
-   * @return
+   * TurboReactPackage所需的API。给定一个模块名称，它将为该名称返回一个{@link* NativeModule}的实例
    */
   public abstract NativeModule getModule(String name, final ReactApplicationContext reactContext);
 

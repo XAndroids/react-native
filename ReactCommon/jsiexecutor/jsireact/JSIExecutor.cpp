@@ -100,6 +100,7 @@ void JSIExecutor::loadApplicationScript(
             return Value::undefined();
           }));
 
+  // 注册了nativeCallSyncHook方法供js调用
   runtime_->global().setProperty(
       *runtime_,
       "nativeCallSyncHook",
@@ -361,6 +362,7 @@ Value JSIExecutor::nativeCallSyncHook(const Value *args, size_t count) {
         folly::to<std::string>("method parameters should be array"));
   }
 
+  // 调用委托，即ModuleRegistry，的callSerializableNativeHook函数
   MethodCallResult result = delegate_->callSerializableNativeHook(
       *this,
       static_cast<unsigned int>(args[0].getNumber()), // moduleId

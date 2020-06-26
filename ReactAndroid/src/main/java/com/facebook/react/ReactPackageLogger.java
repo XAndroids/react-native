@@ -5,7 +5,7 @@
 
 package com.facebook.react;
 
-/** Interface for the bridge to call for TTI start and end markers. */
+/** 接口，用于桥接器调用TTI开始和结束标记。*/
 public interface ReactPackageLogger {
 
   void startProcessPackage();

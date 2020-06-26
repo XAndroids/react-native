@@ -67,7 +67,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/** Package defining basic modules and view managers. */
+/** 包定义基本模块和视图管理器。*/
 @ReactModuleList(
     nativeModules = {
       AccessibilityInfoModule.class,
@@ -184,7 +184,7 @@ public class MainReactPackage extends TurboReactPackage {
     viewManagers.add(new ReactSwitchManager());
     viewManagers.add(new SwipeRefreshLayoutManager());
 
-    // Native equivalents
+    //本地等价物
     viewManagers.add(new ARTSurfaceViewManager());
     viewManagers.add(new FrescoBasedReactTextInlineImageViewManager());
     viewManagers.add(new ReactImageManager());

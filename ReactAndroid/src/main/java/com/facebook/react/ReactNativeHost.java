@@ -74,6 +74,7 @@ public abstract class ReactNativeHost {
             .setJSIModulesPackage(getJSIModulePackage())
             .setInitialLifecycleState(LifecycleState.BEFORE_CREATE);
 
+    //添加Package
     for (ReactPackage reactPackage : getPackages()) {
       builder.addPackage(reactPackage);
     }
@@ -145,9 +146,8 @@ public abstract class ReactNativeHost {
   public abstract boolean getUseDeveloperSupport();
 
   /**
-   * Returns a list of {@link ReactPackage} used by the app. You'll most likely want to return at
-   * least the {@code MainReactPackage}. If your app uses additional views or modules besides the
-   * default ones, you'll want to include more packages here.
+   *返回应用程序使用的{@link ReactPackage}的列表。您可能希望至少返回{@code MainReactPackage}。如果你的应用程
+   * 序除了使用默认视图或模块之外还使用了其他视图或模块，那么你需要在这里包含更多的包。
    */
   protected abstract List<ReactPackage> getPackages();
 }

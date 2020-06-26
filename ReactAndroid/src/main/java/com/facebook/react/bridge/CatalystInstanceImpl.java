@@ -202,6 +202,7 @@ public class CatalystInstanceImpl implements CatalystInstance {
   private native void jniExtendNativeModules(
       Collection<JavaModuleWrapper> javaModules, Collection<ModuleHolder> cxxModules);
 
+  //调用native方法，初始化JsBridge
   private native void initializeBridge(
       ReactCallback callback,
       JavaScriptExecutor jsExecutor,

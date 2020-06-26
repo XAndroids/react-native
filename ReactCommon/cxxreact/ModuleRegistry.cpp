@@ -154,6 +154,7 @@ void ModuleRegistry::callNativeMethod(unsigned int moduleId, unsigned int method
     throw std::runtime_error(
       folly::to<std::string>("moduleId ", moduleId, " out of range [0..", modules_.size(), ")"));
   }
+  // 原生模块注册表被调用处1
   modules_[moduleId]->invoke(methodId, std::move(params), callId);
 }
 
@@ -162,6 +163,7 @@ MethodCallResult ModuleRegistry::callSerializableNativeHook(unsigned int moduleI
     throw std::runtime_error(
       folly::to<std::string>("moduleId ", moduleId, "out of range [0..", modules_.size(), ")"));
   }
+   // 原生模块注册表被调用处2
   return modules_[moduleId]->callSerializableNativeHook(methodId, std::move(params));
 }
 

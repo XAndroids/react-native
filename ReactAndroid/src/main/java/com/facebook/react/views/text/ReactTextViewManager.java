@@ -22,8 +22,7 @@ import com.facebook.yoga.YogaMeasureMode;
 import java.util.Map;
 
 /**
- * Concrete class for {@link ReactTextAnchorViewManager} which represents view managers of anchor
- * {@code <Text>} nodes.
+ * 具体的类为{@link ReactTextAnchorViewManager}，它表示anchor{@code <Text>}节点的视图管理器。
  */
 @ReactModule(name = ReactTextViewManager.REACT_CLASS)
 public class ReactTextViewManager

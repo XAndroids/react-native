@@ -144,6 +144,7 @@ public class ReactInstanceManager {
 
   private final @Nullable JSBundleLoader mBundleLoader;
   private final @Nullable String mJSMainModulePath; /* path to JS bundle root on packager server */
+  //所有系统核心和自定义Module
   private final List<ReactPackage> mPackages;
   private final DevSupportManager mDevSupportManager;
   private final boolean mUseDeveloperSupport;
@@ -239,6 +240,7 @@ public class ReactInstanceManager {
     mLifecycleState = initialLifecycleState;
     mMemoryPressureRouter = new MemoryPressureRouter(applicationContext);
     mNativeModuleCallExceptionHandler = nativeModuleCallExceptionHandler;
+    //添加React Native核心、Debug和基础自定义模块
     synchronized (mPackages) {
       PrinterHolder.getPrinter()
           .logMessage(ReactDebugOverlayTags.RN_CORE, "RNCore: Use Split Packages");
@@ -259,6 +261,7 @@ public class ReactInstanceManager {
       }
       mPackages.addAll(packages);
     }
+
     mJSIModulePackage = jsiModulePackage;
 
     // Instantiate ReactChoreographer in UI thread.
@@ -763,7 +766,7 @@ public class ReactInstanceManager {
     }
   }
 
-  /** Uses configured {@link ReactPackage} instances to create all view managers. */
+  /** 使用配置的{@link ReactPackage}实例创建所有View Managers。*/
   public List<ViewManager> getOrCreateViewManagers(
       ReactApplicationContext catalystApplicationContext) {
     ReactMarker.logMarker(CREATE_VIEW_MANAGERS_START);
@@ -1133,7 +1136,7 @@ public class ReactInstanceManager {
         new CatalystInstanceImpl.Builder()
             .setReactQueueConfigurationSpec(ReactQueueConfigurationSpec.createDefault())
             .setJSExecutor(jsExecutor)
-            .setRegistry(nativeModuleRegistry)
+            .setRegistry(nativeModuleRegistry)//将原生模块注册表传递给JsBridge
             .setJSBundleLoader(jsBundleLoader)
             .setNativeModuleCallExceptionHandler(exceptionHandler);
 
