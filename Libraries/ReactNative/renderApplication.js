@@ -49,6 +49,7 @@ function renderApplication<Props: Object>(
   if (fabric) {
     require('../Renderer/shims/ReactFabric').render(renderable, rootTag);
   } else {
+    //调用ReactNativeRender-xxx.js向Native发送执行渲染消息
     require('../Renderer/shims/ReactNative').render(renderable, rootTag);
   }
   GlobalPerformanceLogger.stopTimespan('renderApplication_React_render');

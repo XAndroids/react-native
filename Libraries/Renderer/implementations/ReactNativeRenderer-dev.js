@@ -4108,6 +4108,7 @@ function createInstance(
 
   var updatePayload = create(props, viewConfig.validAttributes);
 
+  //Native的UIManager Module发送createView消息，用于创建native的相关视图实例
   ReactNativePrivateInterface.UIManager.createView(
     tag, // reactTag
     viewConfig.uiViewClassName, // viewName
