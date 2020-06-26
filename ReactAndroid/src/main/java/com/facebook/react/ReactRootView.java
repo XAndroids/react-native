@@ -55,8 +55,8 @@ import com.facebook.react.uimanager.events.EventDispatcher;
 import com.facebook.systrace.Systrace;
 
 /**
- * Default root view for catalyst apps. Provides the ability to listen for size changes so that a UI
- * manager can re-layout its elements. It delegates handling touch events for itself and child views
+ * catalyst应用程序的默认根视图。提供侦听大小更改的功能，以便UI Manager可以重新布局其元素。It delegates handling
+ * touch events for itself and child views
  * and sending those events to JS by using JSTouchDispatcher. This view is overriding {@link
  * ViewGroup#onInterceptTouchEvent} method in order to be notified about the events for all of its
  * children and it's also overriding {@link ViewGroup#requestDisallowInterceptTouchEvent} to make
@@ -68,9 +68,9 @@ import com.facebook.systrace.Systrace;
  */
 public class ReactRootView extends FrameLayout implements RootView, ReactRoot {
 
-  /** Listener interface for react root view events */
+  /** react root view事件的侦听器接口 */
   public interface ReactRootViewEventListener {
-    /** Called when the react context is attached to a ReactRootView. */
+    /** 当react context attached到ReactRootView时调用。*/
     void onAttachedToReactInstance(ReactRootView rootView);
   }
 
