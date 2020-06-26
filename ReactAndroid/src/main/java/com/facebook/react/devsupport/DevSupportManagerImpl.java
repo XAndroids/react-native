@@ -842,12 +842,11 @@ public class DevSupportManagerImpl
   public void handleReloadJS() {
     //开发模式，加载JS
     UiThreadUtil.assertOnUiThread();
-
     ReactMarker.logMarker(
         ReactMarkerConstants.RELOAD,
         mDevSettings.getPackagerConnectionSettings().getDebugServerHost());
 
-    // dismiss redbox if exists
+    //如果存在的话，隐藏redbox
     hideRedboxDialog();
 
     if (mDevSettings.isRemoteJSDebugEnabled()) {
@@ -863,6 +862,7 @@ public class DevSupportManagerImpl
           .logMessage(ReactDebugOverlayTags.RN_CORE, "RNCore: load from Server");
       String bundleURL =
           mDevServerHelper.getDevServerBundleURL(Assertions.assertNotNull(mJSAppBundleName));
+
       reloadJSFromServer(bundleURL);
     }
   }

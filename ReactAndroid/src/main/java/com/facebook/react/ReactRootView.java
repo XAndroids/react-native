@@ -394,7 +394,6 @@ public class ReactRootView extends FrameLayout implements RootView, ReactRoot {
 
       //获取和加载JS入口
       mReactInstanceManager.createReactContextInBackground();
-      //启动React应用入口
       attachToReactInstanceManager();
 
     } finally {
@@ -565,6 +564,7 @@ public class ReactRootView extends FrameLayout implements RootView, ReactRoot {
 
       mIsAttachedToInstance = true;
       Assertions.assertNotNull(mReactInstanceManager).attachRootView(this);
+
       getViewTreeObserver().addOnGlobalLayoutListener(getCustomGlobalLayoutListener());
     } finally {
       Systrace.endSection(TRACE_TAG_REACT_JAVA_BRIDGE);
