@@ -262,7 +262,7 @@ public class ReactInstanceManagerBuilder {
         mJavaScriptExecutorFactory == null
             ? getDefaultJSExecutorFactory(appName, deviceName)
             : mJavaScriptExecutorFactory,
-        (mJSBundleLoader == null && mJSBundleAssetUrl != null)
+        (mJSBundleLoader == null && mJSBundleAssetUrl != null)//如果是relase报，则直接从asset加载bundler
             ? JSBundleLoader.createAssetLoader(
                 mApplication, mJSBundleAssetUrl, false /*Asynchronous*/)
             : mJSBundleLoader,

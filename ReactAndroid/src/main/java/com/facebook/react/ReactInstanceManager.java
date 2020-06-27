@@ -404,6 +404,7 @@ public class ReactInstanceManager {
       }
     }
 
+    //如果是release模式，不从server laoder Bundle，直接从assets获取内置的bundle
     recreateReactContextInBackgroundFromBundleLoader();
   }
 
