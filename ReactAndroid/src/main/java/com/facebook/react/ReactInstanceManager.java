@@ -1050,6 +1050,8 @@ public class ReactInstanceManager {
   private void attachRootViewToInstance(final ReactRoot reactRoot) {
     Log.d(ReactConstants.TAG, "ReactInstanceManager.attachRootViewToInstance()");
     Systrace.beginSection(TRACE_TAG_REACT_JAVA_BRIDGE, "attachRootViewToInstance");
+
+    //将ReactRootView添加到UIManager中作为rootView，后续在该RootView添加子视图等等
     UIManager uiManager =
         UIManagerHelper.getUIManager(mCurrentReactContext, reactRoot.getUIManagerType());
 
@@ -1063,6 +1065,7 @@ public class ReactInstanceManager {
                 : Arguments.fromBundle(initialProperties),
             reactRoot.getInitialUITemplate());
     reactRoot.setRootViewTag(rootTag);
+
     if (reactRoot.getUIManagerType() == FABRIC) {
       // Fabric requires to call updateRootLayoutSpecs before starting JS Application,
       // this ensures the root will hace the correct pointScaleFactor.
