@@ -17,12 +17,10 @@ import type {ViewConfigGetter} from './ReactNativeTypes';
 const {register} = ReactNativeViewConfigRegistry;
 
 /**
- * Creates a renderable ReactNative host component.
- * Use this method for view configs that are loaded from UIManager.
- * Use createReactNativeComponentClass() for view configs defined within JavaScript.
- *
+ * 创建可呈现的ReactNative宿主组件。
+ * 对从UIManager加载的view config使用这个方法。
+ * 对JavaScript中定义的view config使用createReactNativeComponentClass()。
  * @param {string} config iOS View configuration.
- * @private
  */
 const createReactNativeComponentClass = function(
   name: string,

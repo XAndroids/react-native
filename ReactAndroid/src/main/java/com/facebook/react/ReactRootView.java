@@ -308,7 +308,7 @@ public class ReactRootView extends FrameLayout implements RootView, ReactRoot {
     if (mUseSurface) {
       super.onLayout(changed, left, top, right, bottom);
     }
-    // No-op since UIManagerModule handles actually laying out children.
+    // 没有操作，因为UIManagerModule实际上处理子组件的布局。
   }
 
   @Override
@@ -394,6 +394,7 @@ public class ReactRootView extends FrameLayout implements RootView, ReactRoot {
 
       //获取和加载JS入口
       mReactInstanceManager.createReactContextInBackground();
+      //启动React应用入口
       attachToReactInstanceManager();
 
     } finally {
@@ -564,7 +565,6 @@ public class ReactRootView extends FrameLayout implements RootView, ReactRoot {
 
       mIsAttachedToInstance = true;
       Assertions.assertNotNull(mReactInstanceManager).attachRootView(this);
-
       getViewTreeObserver().addOnGlobalLayoutListener(getCustomGlobalLayoutListener());
     } finally {
       Systrace.endSection(TRACE_TAG_REACT_JAVA_BRIDGE);

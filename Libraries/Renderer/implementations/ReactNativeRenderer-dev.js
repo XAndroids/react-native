@@ -4094,6 +4094,7 @@ function createInstance(
   internalInstanceHandle
 ) {
   var tag = allocateTag();
+  //从createReactNativeComponentClass注册配置信息中查找指定view配置
   var viewConfig = getViewConfigForType(type);
 
   {

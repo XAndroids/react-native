@@ -135,8 +135,7 @@ public class UIImplementation {
   }
 
   /**
-   * Updates the styles of the {@link ReactShadowNode} based on the Measure specs received by
-   * parameters.
+   * 根据参数接收到Measure specs更新{@link ReactShadowNode}的样式。
    */
   public void updateRootView(int tag, int widthMeasureSpec, int heightMeasureSpec) {
     ReactShadowNode rootCSSNode = mShadowNodeRegistry.getNode(tag);
@@ -148,8 +147,7 @@ public class UIImplementation {
   }
 
   /**
-   * Updates the styles of the {@link ReactShadowNode} based on the Measure specs received by
-   * parameters.
+   * 根据参数接收到Measure specs更新{@link ReactShadowNode}的样式。
    */
   public void updateRootView(
       ReactShadowNode rootCSSNode, int widthMeasureSpec, int heightMeasureSpec) {
@@ -178,13 +176,13 @@ public class UIImplementation {
     }
   }
 
-  /** Unregisters a root node with a given tag. */
+  /** 用给定的标记注销根节点。 */
   public void removeRootView(int rootViewTag) {
     removeRootShadowNode(rootViewTag);
     mOperationsQueue.enqueueRemoveRootView(rootViewTag);
   }
 
-  /** Unregisters a root node with a given tag from the shadow node registry */
+  /** 从shadow node注册表中注销一个带有给定标记的根节点 */
   public void removeRootShadowNode(int rootViewTag) {
     synchronized (uiImplementationThreadLock) {
       mShadowNodeRegistry.removeRootNode(rootViewTag); // Thread safety needed here

@@ -65,9 +65,9 @@ function processEventTypes(
 }
 
 /**
- * Registers a native view/component by name.
- * A callback is provided to load the view config from UIManager.
- * The callback is deferred until the view is actually rendered.
+ * 按名称注册native view/component。
+ * 提供了一个callback来从UIManager加载视图配置。
+ * 这个callback被延迟到视图被实际渲染。
  */
 exports.register = function(name: string, callback: ViewConfigGetter): string {
   invariant(

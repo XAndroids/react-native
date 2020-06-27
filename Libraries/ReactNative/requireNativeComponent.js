@@ -14,12 +14,8 @@ const createReactNativeComponentClass = require('../Renderer/shims/createReactNa
 const getNativeComponentAttributes = require('./getNativeComponentAttributes');
 
 /**
- * Creates values that can be used like React components which represent native
- * view managers. You should create JavaScript modules that wrap these values so
- * that the results are memoized. Example:
- *
- *   const View = requireNativeComponent('RCTView');
- *
+ * 创建可以像React组件一样使用的值，React组件代表native view Manager。您应该创建封装这些值的JavaScript模块，以便记忆。例如:
+ * const View = requireNativeComponent('RCTView');
  */
 const requireNativeComponent = (uiViewClassName: string): string =>
   createReactNativeComponentClass(uiViewClassName, () =>
