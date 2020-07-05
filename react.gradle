@@ -5,6 +5,7 @@
 
 import org.apache.tools.ant.taskdefs.condition.Os
 
+//config为project.ext.react
 def config = project.hasProperty("react") ? project.react : [];
 
 def cliPath = config.cliPath ?: "node_modules/react-native/cli.js"
@@ -16,6 +17,7 @@ def reactRoot = file(config.root ?: "../../")
 def inputExcludes = config.inputExcludes ?: ["android/**", "ios/**"]
 def bundleConfig = config.bundleConfig ? "${reactRoot}/${config.bundleConfig}" : null ;
 def enableVmCleanup = config.enableVmCleanup == null ? true : config.enableVmCleanup
+//如果没定义hermesCommand，则使用默认值
 def hermesCommand = config.hermesCommand ?: "../../node_modules/hermes-engine/%OS-BIN%/hermes"
 
 def reactNativeDevServerPort() {
@@ -39,18 +41,18 @@ def getHermesOSBin() {
 
 //除非我们需要它确保不检查Hermes的配置，来避免破坏任何支持JSC的配置
 def getHermesCommand = {
-    //如果项目指定了Hermes命令，就不要在怀疑了
+    //如果项目指定了某个系统下的Hermes命令，就不要在怀疑了
     if (!hermesCommand.contains("%OS-BIN%")) {
         return hermesCommand
     }
 
-    //在Windwos上使用/作为分隔符执行失败
+    //指定操作系统，声明hermesCommand，在Windwos上使用/作为分隔符执行失败
     return hermesCommand
             .replaceAll("%OS-BIN%", getHermesOSBin())
             .replace('/' as char, File.separatorChar);
 }
 
-//设置enableHermesForVariant为配置每个variant的函数，或者将"enableHermes设置为true/falase来设置所有variant
+//设置enableHermesForVariant为方法配置每个variant的函数，或者将"enableHermes设置为true/falase来设置所有variant
 def enableHermesForVariant = config.enableHermesForVariant ?: {
     def variant -> config.enableHermes ?: false
 }
@@ -85,7 +87,8 @@ afterEvaluate {
         def nodeExecutableAndArgs = config.nodeExecutableAndArgs ?: ["node"]
         def extraPackagerArgs = config.extraPackagerArgs ?: []
 
-        //从project.ext.react的配置中获取是否开始hermes
+        //从project.ext.react的配置中，通过variant名称是否包含hermes，或者是否这是project.ext.react.enable
+        //Hermes获取是否开始hermes
         def enableHermes = enableHermesForVariant(variant)
 
         def currentBundleTask = tasks.create(
@@ -126,7 +129,7 @@ afterEvaluate {
                 extraArgs.add(bundleConfig);
             }
 
-            //根据不同的平台，执行命令打bundle包，是否启动hermes输出不同混淆文件
+            //根据不同的平台，将业务js代码，执行命令打bundle包，是否启动hermes输出不同混淆文件
             if (Os.isFamily(Os.FAMILY_WINDOWS)) {
                 commandLine("cmd", "/c", *nodeExecutableAndArgs, cliPath, bundleCommand, "--platform", "android", "--dev", "${devEnabled}",
                     "--reset-cache", "--entry-file", entryFile, "--bundle-output", jsBundleFile, "--assets-dest", resourcesDir,
@@ -168,7 +171,7 @@ afterEvaluate {
                     //将hbc.map文件移动到jsCompileSourceMap文件目录
                     if (hermesFlags.contains("-output-source-map")) {
                         ant.move(
-                            // Hermes will generate a source map with this exact name
+                            // Hermes将会使用扩展名生成一个sourcemap
                             file: "${jsBundleFile}.hbc.map",
                             tofile: jsCompilerSourceMapFile
                         );
@@ -277,12 +280,11 @@ afterEvaluate {
             buildPreBundleTask.dependsOn(currentAssetsCopyTask)
         }
 
-        // Delete the VM related libraries that this build doesn't need.
-        // The application can manage this manually by setting 'enableVmCleanup: false'
+        // 删除此构建不需要的VM相关库。
+        // 应用程序可以通过设置“enableVmCleanup: false”手动管理此操作。
         //
-        // This should really be done by packaging all Hermes releated libs into
-        // two separate HermesDebug and HermesRelease AARs, but until then we'll
-        // kludge it by deleting the .so files out of the /transforms/ directory.
+        // 这实际上应该通过将所有Hermes相关的lib打包到两个独立的HermesDebug和HermesRelease AARs中来实现，但在
+        // 此之前，我们将通过将.so文件从/transforms/目录中删除来进行组装。
         def isRelease = targetName.toLowerCase().contains("release")
         def libDir = "$buildDir/intermediates/transforms/"
         def vmSelectionAction = {

@@ -77,7 +77,7 @@ import com.android.build.OutputFile
 
 project.ext.react = [
     entryFile: "index.js",
-    enableHermes: false,  // clean and rebuild if changing
+    enableHermes: false,  //通过project.ext.react.enableHermes启动Hermes，如果改变clean且rebuild
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -111,11 +111,10 @@ def enableProguardInReleaseBuilds = false
 def jscFlavor = 'org.webkit:android-jsc:+'
 
 /**
- * Whether to enable the Hermes VM.
+ * 是否启用Hermes VM。
  *
- * This should be set on project.ext.react and mirrored here.  If it is not set
- * on project.ext.react, JavaScript will not be compiled to Hermes Bytecode
- * and the benefits of using Hermes will therefore be sharply reduced.
+ * 这个应该在project.ext上设置，应用在这里。如果没有在project.ext上设置。因此，JavaScript将不会被编译成Hermes
+ * 字节码，因此使用Hermes的好处将大大减少。
  */
 def enableHermes = project.ext.react.get("enableHermes", false);
 
@@ -182,6 +181,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
+    //编译hermes.aar引擎到apk中
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
         debugImplementation files(hermesPath + "hermes-debug.aar")

@@ -93,6 +93,7 @@ task prepareFolly(dependsOn: dependenciesPath ? [] : [downloadFolly], type: Copy
 
 //Hermes环境准备，从node_modules/hermes-engine复制so和Android.mk等文件
 task prepareHermes() {
+    //查找hermes引擎aar文件路径
     def hermesAAR = file("$projectDir/../node_modules/hermes-engine/android/hermes-debug.aar")
     if (!hermesAAR.exists()) {
         // For an app to build from RN source, hermes-engine is located at /path/to/app/node_modules
@@ -104,8 +105,11 @@ task prepareHermes() {
             hermesAAR = file("$projectDir/../../node_modules/hermes-engine/android/hermes-debug.aar")
         }
     }
+
+    //解压hermes.aar获取当中的so文件
     def soFiles = zipTree(hermesAAR).matching({ it.include "**/*.so" })
 
+    //将so文件复制而到指定的构建目录中
     copy {
         from soFiles
         from "src/main/jni/first-party/hermes/Android.mk"
@@ -254,6 +258,8 @@ def getNdkBuildFullPath() {
     return ndkBuildFullPath
 }
 
+//prepareHermes task依赖buildReactNdkLib task执行
+//通过ndk编译相关的jni native库，编译之前通过prepareJSC/prepareHermes准备好JSC/Hermes
 task buildReactNdkLib(dependsOn: [prepareJSC, prepareHermes, prepareBoost, prepareDoubleConversion, prepareFolly, prepareGlog], type: Exec) {
     inputs.dir("$projectDir/../ReactCommon")
     inputs.dir("src/main/jni")
@@ -288,7 +294,9 @@ task cleanReactNdkLib(type: Exec) {
     }
 }
 
+//buildReactNdkLib task依赖packageReactNdkLibs task执行
 task packageReactNdkLibs(dependsOn: buildReactNdkLib, type: Copy) {
+    //将react-ndk/all/中so包复制到react-ndk/exported/目录，除了libjsc.so和libhermes.so
     from("$buildDir/react-ndk/all")
     into("$buildDir/react-ndk/exported")
     exclude("**/libjsc.so")
@@ -342,6 +350,7 @@ android {
     }
 
     tasks.withType(JavaCompile) {
+        //compileTask task依赖packageReactNdkLibs task
         compileTask -> compileTask.dependsOn(packageReactNdkLibs)
     }
 
