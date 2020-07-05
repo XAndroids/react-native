@@ -12,7 +12,7 @@ import com.facebook.react.config.ReactFeatureFlags;
 import java.util.HashMap;
 import java.util.Map;
 
-/** Helper class to build NativeModuleRegistry. */
+/** 构建NativeModuleRegistry帮助类。*/
 public class NativeModuleRegistryBuilder {
 
   private final ReactApplicationContext mReactApplicationContext;
@@ -27,8 +27,7 @@ public class NativeModuleRegistryBuilder {
   }
 
   public void processPackage(ReactPackage reactPackage) {
-    // We use an iterable instead of an iterator here to ensure thread safety, and that this list
-    // cannot be modified
+    //我们在使用一个iterable替代一个iterator来确保线程安全，并且这个类表不能修改
     Iterable<ModuleHolder> moduleHolders;
     if (reactPackage instanceof LazyReactPackage) {
       moduleHolders =

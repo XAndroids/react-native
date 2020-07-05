@@ -136,7 +136,7 @@ public class CatalystInstanceImpl implements CatalystInstance {
     Log.d(ReactConstants.TAG, "Initializing React Xplat Bridge before initializeBridge");
     Systrace.beginSection(TRACE_TAG_REACT_JAVA_BRIDGE, "initializeCxxBridge");
 
-    //初始化Bridge，将jsExecutor传入，用于后期执行JS
+    //初始化Bridge，将jsExecutor/Modules传入，用于后期执行JS
     initializeBridge(
         new BridgeCallback(this),
         jsExecutor,

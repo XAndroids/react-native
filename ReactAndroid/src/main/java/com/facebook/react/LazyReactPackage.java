@@ -26,8 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * React package supporting lazy creation of native modules.
- *
+ * React package支持native module的惰性创建
  * <p>TODO(t11394819): Make this default and deprecate ReactPackage
  */
 public abstract class LazyReactPackage implements ReactPackage {

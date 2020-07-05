@@ -40,7 +40,7 @@ public class RNTesterApplication extends Application implements ReactApplication
 
         @Override
         public List<ReactPackage> getPackages() {
-          //注册的Packager，默认添加框架基本的Module
+          //提供自定义和Main Packager，用于后续注册
           return Arrays.<ReactPackage>asList(new MainReactPackage());
         }
       };

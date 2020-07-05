@@ -144,7 +144,7 @@ public class ReactInstanceManager {
 
   private final @Nullable JSBundleLoader mBundleLoader;
   private final @Nullable String mJSMainModulePath; /* path to JS bundle root on packager server */
-  //所有系统核心和自定义Module
+  //所有自定义、Main、Core和Debug Package集合
   private final List<ReactPackage> mPackages;
   private final DevSupportManager mDevSupportManager;
   private final boolean mUseDeveloperSupport;
@@ -240,10 +240,10 @@ public class ReactInstanceManager {
     mLifecycleState = initialLifecycleState;
     mMemoryPressureRouter = new MemoryPressureRouter(applicationContext);
     mNativeModuleCallExceptionHandler = nativeModuleCallExceptionHandler;
-    //添加React Native核心、Debug和基础自定义模块
     synchronized (mPackages) {
       PrinterHolder.getPrinter()
           .logMessage(ReactDebugOverlayTags.RN_CORE, "RNCore: Use Split Packages");
+      //添加React Native Package
       mPackages.add(
           new CoreModulesPackage(
               this,
@@ -256,6 +256,7 @@ public class ReactInstanceManager {
               mUIImplementationProvider,
               lazyViewManagersEnabled,
               minTimeLeftInFrameForNonBatchedOperationMs));
+      //如果是Debug模式，添加Debug Package
       if (mUseDeveloperSupport) {
         mPackages.add(new DebugCorePackage());
       }
@@ -1134,6 +1135,7 @@ public class ReactInstanceManager {
             : mDevSupportManager;
     reactContext.setNativeModuleCallExceptionHandler(exceptionHandler);
 
+    //对Packges进行处理，然后用于后面的注册
     NativeModuleRegistry nativeModuleRegistry = processPackages(reactContext, mPackages, false);
 
     CatalystInstanceImpl.Builder catalystInstanceBuilder =
