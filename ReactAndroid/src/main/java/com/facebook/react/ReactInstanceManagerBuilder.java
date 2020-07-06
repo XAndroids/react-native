@@ -285,7 +285,7 @@ public class ReactInstanceManagerBuilder {
   //没有自定义设置JavaScriptExecutorFactory，则调用默认逻辑，先调用JSC异常调用Hermes
   private JavaScriptExecutorFactory getDefaultJSExecutorFactory(String appName, String deviceName) {
     try {
-      //如果包含JSC，则正常使用它
+      //如果包含JSC so包，则正常使用它
       SoLoader.loadLibrary("jscexecutor");
       return new JSCExecutorFactory(appName, deviceName);
     } catch (UnsatisfiedLinkError jscE) {

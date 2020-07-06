@@ -10,15 +10,14 @@ public interface JavaScriptExecutorFactory {
   JavaScriptExecutor create() throws Exception;
 
   /**
-   * Starts the sampling profiler for this specific JavaScriptExecutor Sampling profiler is usually
-   * a singleton on the runtime, hence the method exists here and not in {@link JavaScriptExecutor}
+   * 这个特定的JavaScriptExecutor采样分析器在运行时通常是一个单例的，因此，该方法存在于这里而不在{@link JavaSc
+   * riptExecutor}中。
    */
   void startSamplingProfiler();
 
   /**
-   * Stops the Sampling profile
-   *
-   * @param filename The filename where the results of the sampling profiler are dumped to
+   * 停止采样配置文件
+   * @param filename 抽样分析器的结果转储到的文件名
    */
   void stopSamplingProfiler(String filename);
 }

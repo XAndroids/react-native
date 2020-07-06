@@ -18,13 +18,13 @@ public abstract class JavaScriptExecutor {
   }
 
   /**
-   * Close this executor and cleanup any resources that it was using. No further calls are expected
-   * after this. TODO mhorowitz: This may no longer be used; check and delete if possible.
+   * 关闭此executor并清除它所使用的任何资源。在此之后，预计不会再有进一步的调用。
+   * TODO mhorowitz:这个可能不再使用;检查并删除，如果可能的话。
    */
   public void close() {
     mHybridData.resetNative();
   }
 
-  /** Returns the name of the executor, identifying the underlying runtime. */
+  /** 返回executor的名称，标识底层运行时。*/
   public abstract String getName();
 }

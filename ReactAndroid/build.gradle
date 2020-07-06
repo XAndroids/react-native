@@ -260,6 +260,7 @@ def getNdkBuildFullPath() {
 
 //prepareHermes task依赖buildReactNdkLib task执行
 //通过ndk编译相关的jni native库，编译之前通过prepareJSC/prepareHermes准备好JSC/Hermes
+//FIXME 编译了什么ndk so？如何gradle编译ndk
 task buildReactNdkLib(dependsOn: [prepareJSC, prepareHermes, prepareBoost, prepareDoubleConversion, prepareFolly, prepareGlog], type: Exec) {
     inputs.dir("$projectDir/../ReactCommon")
     inputs.dir("src/main/jni")
