@@ -72,7 +72,7 @@ afterEvaluate {
         def targetName = variant.name.capitalize()
         def targetPath = variant.dirName
 
-        // React js bundle directories
+        // React js bundler目录
         def jsBundleDir = file("$buildDir/generated/assets/react/${targetPath}")
         def resourcesDir = file("$buildDir/generated/res/react/${targetPath}")
 
@@ -162,7 +162,7 @@ afterEvaluate {
                         }
                     }
 
-                    //将编译的hbc文件移动到jsBundle文件目录
+                    //将编译的hbc文件重名命名jsBundle同名文件
                     ant.move(
                         file: hbcTempFile,
                         toFile: jsBundleFile

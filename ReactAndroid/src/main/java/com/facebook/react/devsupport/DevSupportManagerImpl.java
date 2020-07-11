@@ -430,7 +430,7 @@ public class DevSupportManagerImpl
       return;
     }
     LinkedHashMap<String, DevOptionHandler> options = new LinkedHashMap<>();
-    /* register standard options */
+    /* 注册标准的选项 */
     options.put(
         mApplicationContext.getString(R.string.catalyst_reload),
         new DevOptionHandler() {
@@ -970,8 +970,7 @@ public class DevSupportManagerImpl
   }
 
   private void reloadJSInProxyMode() {
-    // When using js proxy, there is no need to fetch JS bundle as proxy executor will do that
-    // anyway
+    // 当使用js代理时，不需要获取js bundle，因为代理执行器会做那件事
     mDevServerHelper.launchJSDevtools();
 
     JavaJSExecutor.Factory factory =
