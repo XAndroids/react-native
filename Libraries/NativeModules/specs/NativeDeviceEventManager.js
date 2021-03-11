@@ -16,5 +16,5 @@ import * as TurboModuleRegistry from '../../TurboModule/TurboModuleRegistry';
 export interface Spec extends TurboModule {
   +invokeDefaultBackPressHandler: () => void;
 }
-
+//调用Native DeviceEventManagerModule
 export default (TurboModuleRegistry.get<Spec>('DeviceEventManager'): ?Spec);

@@ -83,6 +83,7 @@ public abstract class ReactActivity extends AppCompatActivity
 
   @Override
   public void onBackPressed() {
+    //监听Andriod Back按键的点击
     if (!mDelegate.onBackPressed()) {
       super.onBackPressed();
     }

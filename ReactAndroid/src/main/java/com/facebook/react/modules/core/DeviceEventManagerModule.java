@@ -57,8 +57,7 @@ public class DeviceEventManagerModule extends ReactContextBaseJavaModule {
   }
 
   /**
-   * Invokes the default back handler for the host of this catalyst instance. This should be invoked
-   * if JS does not want to handle the back press itself.
+   * 为catalyst实例的主机调用默认的back处理程序。如果JS不想自己处理，就应该调用这个函数。
    */
   @ReactMethod
   public void invokeDefaultBackPressHandler() {

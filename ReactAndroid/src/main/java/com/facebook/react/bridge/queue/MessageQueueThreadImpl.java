@@ -20,7 +20,7 @@ import com.facebook.react.common.futures.SimpleSettableFuture;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
-/** Encapsulates a Thread that has a {@link Looper} running on it that can accept Runnables. */
+/** 封装一个有{@link Looper}运行的线程，它可以接受Runnables。*/
 @DoNotStrip
 public class MessageQueueThreadImpl implements MessageQueueThread {
 
@@ -43,6 +43,7 @@ public class MessageQueueThreadImpl implements MessageQueueThread {
       MessageQueueThreadPerfStats stats) {
     mName = name;
     mLooper = looper;
+    //使用执行（如后台线程的）looper创建Handler对象，用于实际分发消息
     mHandler = new MessageQueueThreadHandler(looper, exceptionHandler);
     mPerfStats = stats;
     mAssertionErrorMessage = "Expected to be called from the '" + getName() + "' thread!";
@@ -170,8 +171,10 @@ public class MessageQueueThreadImpl implements MessageQueueThread {
       MessageQueueThreadSpec spec, QueueThreadExceptionHandler exceptionHandler) {
     switch (spec.getThreadType()) {
       case MAIN_UI:
+        //创建主线程
         return createForMainThread(spec.getName(), exceptionHandler);
       case NEW_BACKGROUND:
+        //创建后台线程
         return startNewBackgroundThread(spec.getName(), spec.getStackSize(), exceptionHandler);
       default:
         throw new RuntimeException("Unknown thread type: " + spec.getThreadType());
@@ -221,14 +224,17 @@ public class MessageQueueThreadImpl implements MessageQueueThread {
                 long wallTime = SystemClock.uptimeMillis();
                 long cpuTime = SystemClock.currentThreadTimeMillis();
                 assignToPerfStats(stats, wallTime, cpuTime);
+                //创建后台线程的Looper对象，并启动Looper
                 dataFuture.set(new Pair<>(Looper.myLooper(), stats));
                 Looper.loop();
               }
             },
             "mqt_" + name,
             stackSize);
+    //启动后台线程
     bgThread.start();
 
+    //pair.first后台线程的Looper对象
     Pair<Looper, MessageQueueThreadPerfStats> pair = dataFuture.getOrThrow();
     return new MessageQueueThreadImpl(name, pair.first, exceptionHandler, pair.second);
   }

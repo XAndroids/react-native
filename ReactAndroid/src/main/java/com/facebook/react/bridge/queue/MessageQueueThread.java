@@ -10,12 +10,11 @@ import com.facebook.proguard.annotations.DoNotStrip;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
-/** Encapsulates a Thread that can accept Runnables. */
+/** 封装一个可以接受Runnable的线程 */
 @DoNotStrip
 public interface MessageQueueThread {
   /**
-   * Runs the given Runnable on this Thread. It will be submitted to the end of the event queue even
-   * if it is being submitted from the same queue Thread.
+   * 在这个线程上运行给定的Runnable。如果它是从同一个队列线程提交的，它将被提交到事件队列的末尾。
    */
   @DoNotStrip
   void runOnQueue(Runnable runnable);

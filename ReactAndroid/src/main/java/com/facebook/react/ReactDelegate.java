@@ -73,6 +73,7 @@ public class ReactDelegate {
   }
 
   public boolean onBackPressed() {
+    //如果已经创建了mReactInstanceManager实例，则使用RN的Back处理
     if (getReactNativeHost().hasInstance()) {
       getReactNativeHost().getReactInstanceManager().onBackPressed();
       return true;

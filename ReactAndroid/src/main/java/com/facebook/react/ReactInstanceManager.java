@@ -439,6 +439,7 @@ public class ReactInstanceManager {
       FLog.w(ReactConstants.TAG, "Instance detached from instance manager");
       invokeDefaultOnBackPressed();
     } else {
+      //向JS端发送hardwareBackPress事件，JS监听事件后回调相关的观察者处理事件
       DeviceEventManagerModule deviceEventManagerModule =
           reactContext.getNativeModule(DeviceEventManagerModule.class);
       deviceEventManagerModule.emitHardwareBackPressed();

@@ -19,13 +19,16 @@ type BackPressEventName = 'backPress' | 'hardwareBackPress';
 
 const _backPressSubscriptions = [];
 
+//注册hardwareBackPress事件，监听Native返回按钮发出的事件
 RCTDeviceEventEmitter.addListener(DEVICE_BACK_EVENT, function() {
+  //JS端返回按钮事件观察者，回调观察者方法
   for (let i = _backPressSubscriptions.length - 1; i >= 0; i--) {
     if (_backPressSubscriptions[i]()) {
       return;
     }
   }
 
+  //如果没有观察者，则调用默认的处理，退出App
   BackHandler.exitApp();
 });
 
@@ -71,19 +74,21 @@ type TBackHandler = {|
   ) => void,
 |};
 const BackHandler: TBackHandler = {
+  /**
+  * 默认退出应用
+  */
   exitApp: function(): void {
     if (!NativeDeviceEventManager) {
       return;
     }
 
+    //调用默认返回按键处理器
     NativeDeviceEventManager.invokeDefaultBackPressHandler();
   },
 
-  /**
-   * Adds an event handler. Supported events:
-   *
-   * - `hardwareBackPress`: Fires when the Android hardware back button is pressed or when the
-   * tvOS menu button is pressed.
+   /**
+   * 添加一个事件处理器，支持的事件：
+   * - `hardwareBackPress`:当按下Android硬件后退按钮或tvOS菜单按钮时触发
    */
   addEventListener: function(
     eventName: BackPressEventName,
@@ -97,8 +102,8 @@ const BackHandler: TBackHandler = {
     };
   },
 
-  /**
-   * Removes the event handler.
+   /**
+   * 移除事件处理器
    */
   removeEventListener: function(
     eventName: BackPressEventName,
