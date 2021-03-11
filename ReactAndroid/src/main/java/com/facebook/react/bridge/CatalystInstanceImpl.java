@@ -92,6 +92,7 @@ public class CatalystInstanceImpl implements CatalystInstance {
   private final NativeModuleRegistry mNativeModuleRegistry;
   private final JSIModuleRegistry mJSIModuleRegistry = new JSIModuleRegistry();
   private final NativeModuleCallExceptionHandler mNativeModuleCallExceptionHandler;
+  //Native Module线程
   private final MessageQueueThread mNativeModulesQueueThread;
   private boolean mInitialized = false;
   private volatile boolean mAcceptCalls = false;
@@ -129,6 +130,7 @@ public class CatalystInstanceImpl implements CatalystInstance {
     mJSModuleRegistry = new JavaScriptModuleRegistry();
     mJSBundleLoader = jsBundleLoader;
     mNativeModuleCallExceptionHandler = nativeModuleCallExceptionHandler;
+    //创建Native Module线程
     mNativeModulesQueueThread = mReactQueueConfiguration.getNativeModulesQueueThread();
     mTraceListener = new JSProfilerTraceListener(this);
     Systrace.endSection(TRACE_TAG_REACT_JAVA_BRIDGE);
@@ -140,8 +142,8 @@ public class CatalystInstanceImpl implements CatalystInstance {
     initializeBridge(
         new BridgeCallback(this),
         jsExecutor,
-        mReactQueueConfiguration.getJSQueueThread(),
-        mNativeModulesQueueThread,
+        mReactQueueConfiguration.getJSQueueThread(),//传入JS执行线程
+        mNativeModulesQueueThread,//传入Native执行线程
         mNativeModuleRegistry.getJavaModules(this),
         mNativeModuleRegistry.getCxxModules());
 

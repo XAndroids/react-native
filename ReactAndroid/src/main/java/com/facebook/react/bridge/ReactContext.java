@@ -42,8 +42,11 @@ public class ReactContext extends ContextWrapper {
 
   private @Nullable CatalystInstance mCatalystInstance;
   private @Nullable LayoutInflater mInflater;
+  //主UI线程
   private @Nullable MessageQueueThread mUiMessageQueueThread;
+  //Native Module线程
   private @Nullable MessageQueueThread mNativeModulesMessageQueueThread;
+  //JS执行线程
   private @Nullable MessageQueueThread mJSMessageQueueThread;
   private @Nullable NativeModuleCallExceptionHandler mNativeModuleCallExceptionHandler;
   private @Nullable NativeModuleCallExceptionHandler mExceptionHandlerWrapper;

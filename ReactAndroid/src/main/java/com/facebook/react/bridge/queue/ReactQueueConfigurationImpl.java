@@ -11,9 +11,11 @@ import com.facebook.react.common.MapBuilder;
 import java.util.Map;
 
 public class ReactQueueConfigurationImpl implements ReactQueueConfiguration {
-
+  //UI消息线程
   private final MessageQueueThreadImpl mUIQueueThread;
+  //NativeModule消息线程
   private final MessageQueueThreadImpl mNativeModulesQueueThread;
+  //JS消息线程
   private final MessageQueueThreadImpl mJSQueueThread;
 
   private ReactQueueConfigurationImpl(
@@ -57,15 +59,18 @@ public class ReactQueueConfigurationImpl implements ReactQueueConfiguration {
       ReactQueueConfigurationSpec spec, QueueThreadExceptionHandler exceptionHandler) {
     Map<MessageQueueThreadSpec, MessageQueueThreadImpl> specsToThreads = MapBuilder.newHashMap();
 
+    //创建UI线程消息队列
     MessageQueueThreadSpec uiThreadSpec = MessageQueueThreadSpec.mainThreadSpec();
     MessageQueueThreadImpl uiThread = MessageQueueThreadImpl.create(uiThreadSpec, exceptionHandler);
     specsToThreads.put(uiThreadSpec, uiThread);
 
+    //创建JS线程消息队列
     MessageQueueThreadImpl jsThread = specsToThreads.get(spec.getJSQueueThreadSpec());
     if (jsThread == null) {
       jsThread = MessageQueueThreadImpl.create(spec.getJSQueueThreadSpec(), exceptionHandler);
     }
 
+    //创建Native线程消息队列
     MessageQueueThreadImpl nativeModulesThread =
         specsToThreads.get(spec.getNativeModulesQueueThreadSpec());
     if (nativeModulesThread == null) {

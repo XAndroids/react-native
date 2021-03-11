@@ -7,13 +7,12 @@
 package com.facebook.react.bridge.queue;
 
 /**
- * Specifies which {@link MessageQueueThread}s must be used to run the various contexts of execution
- * within catalyst (Main UI thread, native modules, and JS). Some of these queues *may* be the same
- * but should be coded against as if they are different.
+ * 指定了必须使用哪个{@link messagequeuthread}来运行catalyst内部的各种执行context(主UI线程，Native Module和
+ * JS)。其中一些队列*可能*相同，但应该按照它们不同的方式进行编码。
  *
- * <p>UI Queue Thread: The standard Android main UI thread and Looper. Not configurable. Native
- * Modules Queue Thread: The thread and Looper that native modules are invoked on. JS Queue Thread:
- * The thread and Looper that JS is executed on.
+ * UI Queue 线程：标准的Android主UI线程和Looper，不可以配置；
+ * Native Module线程：本机模块被调用的线程和循环器；
+ * JS Queue 线程：JS在这个线程上执行；
  */
 public interface ReactQueueConfiguration {
   MessageQueueThread getUIQueueThread();

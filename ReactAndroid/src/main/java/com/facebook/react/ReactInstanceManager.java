@@ -1158,6 +1158,7 @@ public class ReactInstanceManager {
       ReactMarker.logMarker(CREATE_CATALYST_INSTANCE_END);
     }
 
+    //初始化上下文，获取JS/NativeModule/主UI线程
     reactContext.initializeWithInstance(catalystInstance);
 
     if (mJSIModulePackage != null) {
