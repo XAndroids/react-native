@@ -271,6 +271,26 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('RNTesterApp', () => RNTesterApp);
+//原Demo程序
+// AppRegistry.registerComponent('RNTesterApp', () => RNTesterApp);
+// module.exports = RNTesterApp;
 
-module.exports = RNTesterApp;
+
+//UI渲染调研Demo
+class RNTesterApp1 extends React.Component<> {
+  render() {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center"
+        }}>
+        <Text>Hello, world!</Text>
+      </View>
+    );
+  }
+}
+
+AppRegistry.registerComponent('RNTesterApp', () => RNTesterApp1);
+module.exports = RNTesterApp1;
