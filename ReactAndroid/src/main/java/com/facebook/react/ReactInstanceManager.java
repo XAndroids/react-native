@@ -738,7 +738,7 @@ public class ReactInstanceManager {
     UiThreadUtil.assertOnUiThread();
     mAttachedReactRoots.add(reactRoot);
 
-    // Reset reactRoot content as it's going to be populated by the application content from JS.
+    // 重设reacroot的内容，因为它将由来自JS的应用程序内容填充。
     clearReactRoot(reactRoot);
 
     // If react context is being created in the background, JS application will be started
@@ -1053,12 +1053,13 @@ public class ReactInstanceManager {
     Log.d(ReactConstants.TAG, "ReactInstanceManager.attachRootViewToInstance()");
     Systrace.beginSection(TRACE_TAG_REACT_JAVA_BRIDGE, "attachRootViewToInstance");
 
-    //将ReactRootView添加到UIManager中作为rootView，后续在该RootView添加子视图等等
+    //构造获取UIMangeer对象
     UIManager uiManager =
         UIManagerHelper.getUIManager(mCurrentReactContext, reactRoot.getUIManagerType());
 
     @Nullable Bundle initialProperties = reactRoot.getAppProperties();
 
+    //将ReactRootView添加到UIManager中，后续JS发送指令后想ReactRootView添加视图
     final int rootTag =
         uiManager.addRootView(
             reactRoot.getRootViewGroup(),

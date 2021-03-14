@@ -520,7 +520,7 @@ public class UIViewOperationQueue {
   private final DispatchUIFrameCallback mDispatchUIFrameCallback;
   private final ReactApplicationContext mReactApplicationContext;
 
-  // Only called from the UIManager queue?
+  //只从UIManager队列调用？UI操作队列
   private ArrayList<UIOperation> mOperations = new ArrayList<>();
 
   @GuardedBy("mDispatchRunnablesLock")

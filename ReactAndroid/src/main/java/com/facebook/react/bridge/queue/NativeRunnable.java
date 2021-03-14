@@ -9,7 +9,7 @@ package com.facebook.react.bridge.queue;
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;
 
-/** A Runnable that has a native run implementation. */
+/** 具有Native run实现的 Runnable */
 @DoNotStrip
 public class NativeRunnable implements Runnable {
 

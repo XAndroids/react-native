@@ -294,3 +294,9 @@ class RNTesterApp1 extends React.Component<> {
 
 AppRegistry.registerComponent('RNTesterApp', () => RNTesterApp1);
 module.exports = RNTesterApp1;
+
+//关闭黄色警告
+//参考：https://blog.csdn.net/qq_25905161/article/details/81298050
+console.ignoredYellowBox = ['Warning: BackAndroid is deprecated. Please use BackHandler instead.','source.uri ' +
+'should not be an empty string','Invalid props.style key'];
+console.disableYellowBox = true

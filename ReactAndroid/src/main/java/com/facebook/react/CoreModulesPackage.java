@@ -149,7 +149,7 @@ import java.util.Map;
       case Timing.NAME:
         return new Timing(reactContext, mReactInstanceManager.getDevSupportManager());
       case UIManagerModule.NAME:
-        return createUIManager(reactContext);
+        return createUIManager(reactContext);//创建UIManager Module用于创建视图
       case DeviceInfoModule.NAME:
         return new DeviceInfoModule(reactContext);
       default:

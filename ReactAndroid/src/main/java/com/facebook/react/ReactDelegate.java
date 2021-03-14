@@ -98,6 +98,7 @@ public class ReactDelegate {
     if (mReactRootView != null) {
       throw new IllegalStateException("Cannot loadApp while app is already running.");
     }
+    //创建ReactRootView，并启动应用
     mReactRootView = createRootView();
     mReactRootView.startReactApplication(
         getReactNativeHost().getReactInstanceManager(), appKey, mLaunchOptions);

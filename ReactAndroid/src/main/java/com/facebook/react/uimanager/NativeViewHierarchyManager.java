@@ -578,7 +578,7 @@ public class NativeViewHierarchyManager {
               + "addRootView.");
     }
 
-    mTagsToViews.put(tag, view);
+    mTagsToViews.put(tag, view);//将ReactRootView添加到创建的View集合中
     mTagsToViewManagers.put(tag, mRootViewManager);
     mRootTags.put(tag, true);
     view.setId(tag);
